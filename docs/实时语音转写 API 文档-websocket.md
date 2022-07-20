@@ -9,7 +9,6 @@ asr sdk from zmeet
 
 ## 接口Demo
 
-**示例demo**请点击 **[这里](https://api.abcpen.com/doc/asr/rtasr/API.html#调用示例)** 下载。
 目前仅提供部分开发语言的demo，其他语言请参照下方接口文档进行开发。
 
 ## 接口要求
@@ -297,28 +296,6 @@ IP白名单规则
 | 10205  | websocket read error    | 服务端websocket读错误 | 检查网络是否正常，向服务提供商反馈    |
 | 16003  | basic component error   | 基础组件异常          | 重试或向服务提供商反馈                |
 | 10800  | over max connect limit  | 超过授权的连接数      | 确认连接数是否超过授权的连接数        |
-
-## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#调用示例)调用示例
-
-*注: demo只是一个简单的调用示例，不适合直接放在复杂多变的生产环境使用*
-
-[实时语音转写demo go语言](https://xfyun-doc.cn-bj.ufileos.com/1536131421882586/rtasr_go_demo.zip)
-
-[实时语音转写demo python2语言](https://xfyun-doc.cn-bj.ufileos.com/1536131452547067/rtasr_python_demo.zip)
-
-[实时语音转写demo python3语言](https://xfyun-doc.cn-bj.ufileos.com/static/16526691109619965/rtasr_python3_demo.zip)
-
-[实时语音转写demo java语言 支持ws不支持wss](https://xfyun-doc.cn-bj.ufileos.com/1532507948242025/rtasr_java_demo.zip)
-
-[实时语音转写demo java语言 ws和wss均支持](https://xfyun-doc.cn-bj.ufileos.com/1592883188297197/rtasr_java_demo_wss.zip)
-
-[实时语音转写demo nodejs语言](https://xfyun-doc.cn-bj.ufileos.com/1568630016708894/rtasr_ws_nodejs_demo.zip)
-
-[实时语音转写demo js语言](https://xfyun-doc.cn-bj.ufileos.com/1614580105248733/rtasr_ws_js_demo.zip)
-
-笔声开放平台AI能力-JAVASDK: [Github地址](https://github.com/iFLYTEK-OP/websdk-java)
-
-笔声开放平台AI能力-PHPSDK: [Github地址](https://github.com/iFLYTEK-OP/websdk-php)
 
 ## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#常见问题)常见问题
 
