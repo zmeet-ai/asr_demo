@@ -1,0 +1,16 @@
+{
+  "name": "rtasr-ws",
+  "version": "1.0.0",
+  "description": "",
+  "main": "rtasr-ws-node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "log4node": "^0.1.6",
+    "ws": "^7.1.2"
+  }
+}
