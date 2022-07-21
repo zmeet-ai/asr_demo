@@ -33,7 +33,7 @@ var APPKEY = ""
 var END_TAG = "{\"end\" : true}"
 
 // 每次发送的数据大小
-var SLICE_SIZE = 1280
+var SLICE_SIZE = 6400
 
 var FILE_PATH = "./test_1.pcm"
 
@@ -102,8 +102,8 @@ func send(conn *websocket.Conn, sendChan chan int, filePath string, t *testing.T
 			t.Error("send byte msg err: ", err)
 			return
 		}
-		// println("send data success, sleep 40 ms")
-		time.Sleep(40 * time.Millisecond)
+		// println("send data success, sleep 200 ms")
+		time.Sleep(200 * time.Millisecond)
 	}
 
 	// 上传结束符
