@@ -107,12 +107,7 @@
 | pd               | string | 否   | 垂直领域个性化参数: 法院: court 教育: edu 金融: finance 医疗: medical 科技: tech 体育: sport 政府: gov 游戏: game 电商: ecom 汽车: car | 设置示例：prepareParam.put("pd", "edu") pd为非必须设置参数，不设置参数默认为通用 |
 | hotWord          | string | 否   | 会话级热词（**使用此参数后appid对应控制台热词不生效**）用以提升专业词汇的识别率，注意点如下： 1、单个热词设置：热词 2、多个热词设置：热词1\|热词2\|热词3 3、单个热词长度不得大于16 4、热词个数限制200个 | 设置示例 1、prepareParam.put("hotWord", "梁育生") 2、prepareParam.put("hotWord", "梁育生\|开心") |
 
-*注：*
 
-```txt
-	标准版和电话版本的已经合并，现在购买的都是标准版的订单，lfasr_type传0即可；
-	发音人分离可通过"has_seperate=true"和"speaker_number=个数"来配置。
-```
 
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#返回值)返回值
 
@@ -523,11 +518,7 @@ class SliceIdGenerator:
 
 笔声开放平台AI能力-PHPSDK: [Github地址](https://github.com/iFLYTEK-OP/websdk-php)
 
-## [#](https://api.abcpen.com/doc/asr/lfasr/API.html#教学视频)教学视频
 
-[语音转写技术入门系列课](https://www.aidaxue.com/course/courseDetail?id=384&ch=WZsp384)
-
-[语音转写WebAPI接口接入实战](https://www.aidaxue.com/course/courseDetail?id=516&ch=WZsp516)
 
 ## [#](https://api.abcpen.com/doc/asr/lfasr/API.html#常见问题)常见问题
 
