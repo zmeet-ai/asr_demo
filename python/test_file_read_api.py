@@ -15,7 +15,7 @@ from client_auth_service import get_signature_yitu, get_signature_flytek
 class Client():
     def __init__(self):
         global args
-        base_url = "wss://ai.abcpen.com/v1/ws"
+        base_url = "wss://ai.abcpen.com/v1/asr/ws"
         ts = str(int(time.time()))
 
         self.end_tag = '{"end" : true}'
