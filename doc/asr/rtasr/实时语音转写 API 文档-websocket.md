@@ -1,17 +1,18 @@
 # asr_sdk
 asr sdk from zmeet
-# 实时语音转写 API 文档
 
-## 接口说明
+# [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写API文档)实时语音转写API文档
+
+## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#接口说明)接口说明
 
 实时语音转写（Real-time ASR）基于深度全序列卷积神经网络框架，通过 WebSocket 协议，建立应用与语言转写核心引擎的长连接，开发者可实现将连续的音频流内容，实时识别返回对应的文字流内容。
 支持的音频格式： 采样率为16K，采样深度为16bit的pcm_s16le音频
 
-## 接口Demo
+## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#接口Demo)接口Demo
 
 目前仅提供部分开发语言的demo，其他语言请参照下方接口文档进行开发。
 
-## 接口要求
+## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#接口要求)接口要求
 
 集成实时语音转写API时，需按照以下要求。
 
