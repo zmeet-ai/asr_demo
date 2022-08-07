@@ -1,18 +1,18 @@
 # asr_sdk
 asr sdk from zmeet
 
-# [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写API文档)实时语音转写API文档
+# [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写API文档)实时语音转写API文档
 
-## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#接口说明)接口说明
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接口说明)接口说明
 
 实时语音转写（Real-time ASR）基于深度全序列卷积神经网络框架，通过 WebSocket 协议，建立应用与语言转写核心引擎的长连接，开发者可实现将连续的音频流内容，实时识别返回对应的文字流内容。
 支持的音频格式： 采样率为16K，采样深度为16bit的pcm_s16le音频
 
-## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#接口Demo)接口Demo
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接口Demo)接口Demo
 
 目前仅提供部分开发语言的demo，其他语言请参照下方接口文档进行开发。
 
-## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#接口要求)接口要求
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接口要求)接口要求
 
 集成实时语音转写API时，需按照以下要求。
 
@@ -20,7 +20,7 @@ asr sdk from zmeet
 | :------- | :----------------------------------------------------------- |
 | 请求协议 | ws[s] (为提高安全性，强烈推荐wss)                            |
 | 请求地址 | ws[s]: //ai.abcpen.com/v1/asr/ws?{请求参数} *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
-| 接口鉴权 | 签名机制，详见[数字签名](https://ai.abcpen.com/doc/asr/rtasr/API.html#signa生成) |
+| 接口鉴权 | 签名机制，详见[数字签名](https://api.abcpen.com/doc/asr/rtasr/API.html#signa生成) |
 | 字符编码 | UTF-8                                                        |
 | 响应格式 | 统一采用JSON格式                                             |
 | 开发语言 | 任意，只要可以向笔声云服务发起WebSocket请求的均可            |
@@ -29,13 +29,13 @@ asr sdk from zmeet
 | 数据发送 | 建议音频流每200ms发送6400字节                                |
 | 语言种类 | 中文普通话、中英混合识别、英文                               |
 
-## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#接口调用流程)接口调用流程
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接口调用流程)接口调用流程
 
 *注：* 若需配置IP白名单，请发送邮件到support@abcpen.com
 
 实时语音转写接口调用包括两个阶段：握手阶段和实时通信阶段。
 
-### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#握手阶段)握手阶段
+### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#握手阶段)握手阶段
 
 接口地址
 
@@ -62,7 +62,7 @@ asr sdk from zmeet
 | punc  | string | 否   | 标点过滤控制，默认返回标点，punc=0会过滤结果中的标点         | 0                                                            |
 | pd    | string | 否   | 垂直领域个性化参数: 法院: court 教育: edu 金融: finance 医疗: medical 科技: tech 运营商: isp 政府: gov 电商: ecom 军事: mil 企业: com 生活: life 汽车: car | 设置示例：pd="edu" 参数pd为非必须设置，不设置参数默认为通用  |
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#signa生成)signa生成
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#signa生成)signa生成
 
 1.获取baseString，baseString由appid和当前时间戳ts拼接而成，假如appid为595f23df，ts为1512041814，则baseString为
 
@@ -81,22 +81,22 @@ asr sdk from zmeet
 备注：
 
 - apiKey：接口密钥，在应用中添加实时语音转写服务时自动生成，调用方注意保管；
-- signa的生成公式：HmacSHA1(MD5(appid + ts), api_key)，具体的生成方法详见【[调用示例](https://ai.abcpen.com/doc/asr/rtasr/API.html#调用示例)】；
+- signa的生成公式：HmacSHA1(MD5(appid + ts), api_key)，具体的生成方法详见【[调用示例](https://api.abcpen.com/doc/asr/rtasr/API.html#调用示例)】；
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#请求示例)请求示例
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#请求示例)请求示例
 
 ```text
 	ws://ai.abcpen.com/v1/asr/ws?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
 ```
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#返回值)返回值
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#返回值)返回值
 
 结果格式为json，字段说明如下：
 
 | 参数   | 类型   | 说明                                                         |
 | :----- | :----- | :----------------------------------------------------------- |
 | action | string | 结果标识，started:握手，result:结果，error:异常              |
-| code   | string | 结果码(具体见[错误码](https://ai.abcpen.com/doc/asr/rtasr/API.html#错误码)) |
+| code   | string | 结果码(具体见[错误码](https://api.abcpen.com/doc/asr/rtasr/API.html#错误码)) |
 | data   | string | 结果数据                                                     |
 | desc   | string | 描述                                                         |
 | sid    | string | 会话ID                                                       |
@@ -128,11 +128,11 @@ asr sdk from zmeet
 	}
 ```
 
-### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时通信阶段)实时通信阶段
+### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时通信阶段)实时通信阶段
 
 握手成功后，进入实时通信阶段，此时客户端的主动操作有两种：上传数据和上传结束标识，被动操作有两种：接收转写结果和错误
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#上传数据)上传数据
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#上传数据)上传数据
 
 在实时转写过程中，客户端不断构造binary message发送到服务端，内容是音频的二进制数据。此操作的频率影响到文字结果展现的实时性。
 
@@ -140,7 +140,7 @@ asr sdk from zmeet
 
 1.建议音频流每200ms发送6400字节，发送过快可能导致引擎出错； 2.音频发送间隔超时时间为15秒，超时服务端报错并主动断开连接。
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#上传结束标志)上传结束标志
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#上传结束标志)上传结束标志
 
 音频数据上传完成后，客户端需发送一个特殊的binary message到服务端作为结束标识，内容是：
 
@@ -148,7 +148,7 @@ asr sdk from zmeet
  	{"end" : true}
 ```
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#接收转写结果)接收转写结果
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接收转写结果)接收转写结果
 
 交互过程中，服务端不断返回 text message （转写结果） 到客户端。当所有结果发送完毕后，服务端断开连接，交互结束。
 
@@ -254,11 +254,11 @@ asr sdk from zmeet
 | type   | 结果类型标识                                                 | 0-最终结果；1-中间结果               |
 | seg_id | 转写结果序号                                                 | 从0开始                              |
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#接收错误信息)接收错误信息
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接收错误信息)接收错误信息
 
 交互过程中，在服务端出现异常而中断服务时（如会话超时），会将异常信息以 text message 形式返回给客户端并关闭连接。
 
-## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#白名单)白名单
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#白名单)白名单
 
 在调用该业务接口时
 
@@ -282,7 +282,7 @@ IP白名单规则
 }
 ```
 
-## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#错误码)错误码
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#错误码)错误码
 
 | 错误码 | 描述                    | 说明                  | 处理方式                              |
 | :----- | :---------------------- | :-------------------- | :------------------------------------ |
@@ -298,58 +298,58 @@ IP白名单规则
 | 16003  | basic component error   | 基础组件异常          | 重试或向服务提供商反馈                |
 | 10800  | over max connect limit  | 超过授权的连接数      | 确认连接数是否超过授权的连接数        |
 
-## [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#常见问题)常见问题
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#常见问题)常见问题
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写支持什么平台)实时语音转写支持什么平台？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写支持什么平台)实时语音转写支持什么平台？
 
 > 答：实时转写只支持webapi接口，开放平台“实时语音转写”需要WebSocket接入，针对是有编程基础的开发者用户。如果您是个人用户，不想通过编程方式直接实现语音转写功能，可以去笔声听见官网，了解语音转写功能的更多详情。
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写支持什么语言)实时语音转写支持什么语言？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写支持什么语言)实时语音转写支持什么语言？
 
 > 答：中文普通话、中英混合识别、英文，小语种以及中文方言可以到控制台-实时语音转写-方言/语种处添加试用或购买。
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#支持的音频是什么格式)支持的音频是什么格式？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#支持的音频是什么格式)支持的音频是什么格式？
 
 > 答：采样率为16K，采样深度为16bit的pcm_s16le音频
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写支持的音频时长有什么限制)实时语音转写支持的音频时长有什么限制？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写支持的音频时长有什么限制)实时语音转写支持的音频时长有什么限制？
 
 > 答：实时语音转写可以实时识别持续的音频流，结果是实时返回，音频流长度理论上不做限制，典型的应用场景是大会或者直播的实时字幕。
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写的分片时长40ms是什么意思)实时语音转写的分片时长200ms是什么意思？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写的分片时长40ms是什么意思)实时语音转写的分片时长200ms是什么意思？
 
 > 答：可以理解为上传的间隔为200ms，建议音频流每200ms向服务器发送6400字节，发过快可能导致引擎出错，音频发送间隔超时时间为15s，超时服务端报错并主动断开连接。
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#如何购买实时语音转写)如何购买实时语音转写？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#如何购买实时语音转写)如何购买实时语音转写？
 
 > 答：登录笔声开放平台，进入实时语音转写页面，点击“申请购买”按钮，在线购买时长与路数即可。
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写如何添加ip白名单)实时语音转写如何添加IP白名单？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写如何添加ip白名单)实时语音转写如何添加IP白名单？
 
 > 答：登录笔声开放平台，点击右上角的“控制台”，点击“我的应用”，选择到所创建的实时语音转写Web api应用平台，点击IP白名单“管理”按钮，即可添加IP白名单。
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写如何免费试用)实时语音转写如何免费试用？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写如何免费试用)实时语音转写如何免费试用？
 
 > 答：可在实时语音转写服务的产品页面，直接领取免费使用权限；到期后可直接在控制台点击购买时长和授权（价格可见）
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写和语音听写的区别有哪些)实时语音转写和语音听写的区别有哪些？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写和语音听写的区别有哪些)实时语音转写和语音听写的区别有哪些？
 
 > 答：支持时长：在线语音听写单次会话支持60s以内的语音转文字；实时语音转写的音频流长度理论上不做限制
 > 支持语种：在线语音听写除中文普通话和英文外，支持12个语种，25种方言；实时语音转写支持中文普通话、中英混合识别、英语、开通的小语种以及中文方言；
 > 应用场景：在线语音听写主要用于短语音的识别，如聊天输入、语音搜索等；实时语音转写可以实时识别持续的音频流，典型的应用场景是大会或者直播的实时字幕
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写接口返回10105-如何解决)实时语音转写接口返回10105，如何解决？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写接口返回10105-如何解决)实时语音转写接口返回10105，如何解决？
 
 > 答：未通过服务端校验，请检查appid，apiKey，ip白名单，checkSum等授权参数是否正确。
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#调用实时语音转写接口报10110错误码-如何解决)调用实时语音转写接口报10110错误码，如何解决？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#调用实时语音转写接口报10110错误码-如何解决)调用实时语音转写接口报10110错误码，如何解决？
 
 > 答：没有授权许可或授权数已满，请至控制台查看时长和路数情况，并查看有效期；如果未领取免费包，请至产品页面领取。
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写支不支持离线)实时语音转写支不支持离线？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写支不支持离线)实时语音转写支不支持离线？
 
 > 答：不支持
 
-#### [#](https://ai.abcpen.com/doc/asr/rtasr/API.html#实时语音转写如果一次连接使用时长超出了剩余时长怎么办)实时语音转写如果一次连接使用时长超出了剩余时长怎么办？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写如果一次连接使用时长超出了剩余时长怎么办)实时语音转写如果一次连接使用时长超出了剩余时长怎么办？
 
 > 答：首先为了使业务使用不受影响，如果在连接期间使用时长超出，转写功能并不会立刻停止。本次连接断开后时长可能会出现为负数的情况，请在使用过程中关注时长剩余情况并及时购买时长。
