@@ -1,33 +1,33 @@
-# asr_demo
-asr demo (语音识别demo)
-# asr_sdk
-asr sdk from zmeet
-# 实时语音转写 API 文档
+[TOC]
 
-## 接口说明
+
+
+# [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写API文档)实时语音转写API文档
+
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接口说明)接口说明
 
 实时语音转写（Real-time ASR）基于深度全序列卷积神经网络框架，通过 WebSocket 协议，建立应用与语言转写核心引擎的长连接，开发者可实现将连续的音频流内容，实时识别返回对应的文字流内容。
 支持的音频格式： 采样率为16K，采样深度为16bit的pcm_s16le音频
 
-## 接口Demo
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接口Demo)接口Demo
 
 目前仅提供部分开发语言的demo，其他语言请参照下方接口文档进行开发。
 
-## 接口要求
+## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接口要求)接口要求
 
 集成实时语音转写API时，需按照以下要求。
 
 | 内容     | 说明                                                         |
 | :------- | :----------------------------------------------------------- |
 | 请求协议 | ws[s] (为提高安全性，强烈推荐wss)                            |
-| 请求地址 | ws[s]: //ai.abcpen.com/v1/ws?{请求参数} *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
+| 请求地址 | ws[s]: //ai.abcpen.com/v1/asr/ws?{请求参数} *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
 | 接口鉴权 | 签名机制，详见[数字签名](https://api.abcpen.com/doc/asr/rtasr/API.html#signa生成) |
 | 字符编码 | UTF-8                                                        |
 | 响应格式 | 统一采用JSON格式                                             |
 | 开发语言 | 任意，只要可以向笔声云服务发起WebSocket请求的均可            |
 | 音频属性 | 采样率16k、位长16bit、单声道                                 |
 | 音频格式 | pcm                                                          |
-| 数据发送 | 建议音频流每200ms发送6400字节                                 |
+| 数据发送 | 建议音频流每200ms发送6400字节                                |
 | 语言种类 | 中文普通话、中英混合识别、英文                               |
 
 ## [#](https://api.abcpen.com/doc/asr/rtasr/API.html#接口调用流程)接口调用流程
@@ -41,9 +41,9 @@ asr sdk from zmeet
 接口地址
 
 ```text
-    ws://ai.abcpen.cn/v1/ws?{请求参数}
+    ws://ai.abcpen.com/v1/asr/ws?{请求参数}
     或
-    wss://ai.abcpen.cn/v1/ws?{请求参数}
+    wss://ai.abcpen.com/v1/asr/ws?{请求参数}
 ```
 
 参数格式
@@ -87,7 +87,7 @@ asr sdk from zmeet
 #### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#请求示例)请求示例
 
 ```text
-	ws://ai.abcpen.cn/v1/ws?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
+	ws://ai.abcpen.com/v1/asr/ws?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
 ```
 
 #### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#返回值)返回值
@@ -317,7 +317,7 @@ IP白名单规则
 
 > 答：实时语音转写可以实时识别持续的音频流，结果是实时返回，音频流长度理论上不做限制，典型的应用场景是大会或者直播的实时字幕。
 
-#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写的分片时长200ms是什么意思)实时语音转写的分片时长200ms是什么意思？
+#### [#](https://api.abcpen.com/doc/asr/rtasr/API.html#实时语音转写的分片时长40ms是什么意思)实时语音转写的分片时长200ms是什么意思？
 
 > 答：可以理解为上传的间隔为200ms，建议音频流每200ms向服务器发送6400字节，发过快可能导致引擎出错，音频发送间隔超时时间为15s，超时服务端报错并主动断开连接。
 
