@@ -405,7 +405,7 @@ class SliceIdGenerator:
     "ok":0,
     "err_no":0,
     "failed":null,
-    "data":"[{\"bg\":\"0\",\"ed\":\"4950\",\"onebest\":\"科大笔声是中国的智能语音技术提供商。\",\"speaker\":\"0\"}]"
+    "data":"[{\"bg\":\"0\",\"ed\":\"4950\",\"onebest\":\"笔声是中国的智能语音技术提供商。\",\"speaker\":\"0\"}]"
 }
 ```
 
