@@ -25,7 +25,7 @@
 | 内容             | 说明                                                         |
 | :--------------- | :----------------------------------------------------------- |
 | 请求协议         | http[s]（为提高安全性，强烈推荐https）                       |
-| 请求地址         | http[s]: //raasr.xfyun.cn/api/xxx *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
+| 请求地址         | http[s]: //ai.abcpen.com/api/xxx *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
 | 请求方式         | POST                                                         |
 | 接口鉴权         | 签名机制，详见下方[2、文件分片上传接口]                      |
 | 字符编码         | UTF-8                                                        |
@@ -74,7 +74,7 @@
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#url)URL
 
 ```http
-	POST  http[s]://raasr.xfyun.cn/api/prepare
+	POST  http[s]://ai.abcpen.com/api/prepare
 ```
 
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#请求头)请求头
@@ -155,7 +155,7 @@
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#url-2)url
 
 ```http
-	POST  http[s]://raasr.xfyun.cn/api/upload
+	POST  http[s]://ai.abcpen.com/api/upload
 ```
 
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#请求头-2)请求头
@@ -264,7 +264,7 @@ class SliceIdGenerator:
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#url-3)url
 
 ```http
-	POST  http[s]://raasr.xfyun.cn/api/merge
+	POST  http[s]://ai.abcpen.com/api/merge
 ```
 
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#请求头-3)请求头
@@ -319,7 +319,7 @@ class SliceIdGenerator:
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#url-4)url
 
 ```http
-	POST  http[s]://raasr.xfyun.cn/api/getProgress
+	POST  http[s]://ai.abcpen.com/api/getProgress
 ```
 
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#请求头-4)请求头
@@ -378,7 +378,7 @@ class SliceIdGenerator:
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#url-5)url
 
 ```http
-	POST  http[s]://raasr.xfyun.cn/api/getResult
+	POST  http[s]://ai.abcpen.com/api/getResult
 ```
 
 #### [#](https://api.abcpen.com/doc/asr/lfasr/API.html#请求头-5)请求头
