@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 from socket import *
 import json
 import time
@@ -9,6 +10,7 @@ from urllib.parse import quote
 import logging
 import wave
 import os
+import sys
 import argparse
 
 
@@ -17,17 +19,14 @@ from client_auth_service import get_signature_yitu, get_signature_flytek
 class Client():
     def __init__(self):
         global args
-        base_url = "wss://ai.abcpen.com/v1/asr/ws"
+        base_url = "wss://{}/v1/asr/ws".format(args.url)
         ts = str(int(time.time()))
 
-        if (args.style == "yitu"):
-            signa = get_signature_yitu(ts, app_id, api_key)
-        else:
-            signa = get_signature_flytek(ts, app_id, api_key)
-        self.end_tag = '{"end" : true}'
+        signa = get_signature_flytek(ts, app_id, api_key)
+        self.end_tag = ''
 
         self.ws = create_connection(
-            base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa)+"&style=" + args.style)
+            base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa))
         self.trecv = threading.Thread(target=self.recv)
         self.trecv.start()
 
@@ -41,7 +40,6 @@ class Client():
             if len(data) == 0:
                 break
 
-            #data = bytes(data, encoding='utf-8')
             self.ws.send(data, 0x2)
             time.sleep(0.2)
 
@@ -54,6 +52,7 @@ class Client():
                 result = str(self.ws.recv())
                 if len(result) == 0:
                     print("receive result empty")
+                    self.close()
                     continue
                     # break
                 result_dict = json.loads(result)
@@ -85,20 +84,20 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="ASR Server test",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-s', '--style', type=str, metavar='STYLE',
-                        help='api style', default='flytek')
     parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='localhost:3698')
+                        help='server url', default='ai.abcpen.com')
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./test_1.wav')
+                        help='wave file path', default='./gametest.wav')
     args = parser.parse_args()
     logging.basicConfig()
 
     app_id = ""
     api_key = ""
-    file_path = r"./test_1.wav"
+    if (len(app_id)<=0 or len(api_key)<=0):
+        print("Please apply appid and appsecret, demo will exit now")
+        sys.exit(1)
 
     client = Client()
-    client.send(file_path)
+    client.send(args.wave_path)
