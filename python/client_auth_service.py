@@ -10,13 +10,6 @@ def get_auth_info(dev_id, dev_key):
                          digestmod=hashlib.sha256).hexdigest()
     return [('x-api-key', ','.join([str(dev_id), ts, signature]))]
 
-def get_signature_yitu(timestamp, dev_id, dev_key):
-    ts = str(timestamp)
-    id_ts = str(dev_id) + ts
-    signature = hmac.new(str(dev_key).encode(), id_ts.encode(),
-                         digestmod=hashlib.sha256).hexdigest()
-    return signature
-
 def get_signature_flytek(ts, app_id, api_key):
     tt = (app_id + ts).encode('utf-8')
     md5 = hashlib.md5()
