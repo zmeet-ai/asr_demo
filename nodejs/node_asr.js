@@ -14,15 +14,17 @@ var fs = require('fs')
 var log = require('log4node')
 var path = require("path")
 const { exit } = require('process')
+const {execSync} = require('child_process');
+
 
 // 系统配置
 const config = {
   // 请求地址
-  hostUrl: "wss://ai.abcpen.com/v1/ws",
+  hostUrl: "wss://ai.abcpen.com/v1/asr/ws",
   //在控制台-我的应用-实时语音转写获取
-  appid: "",
+  appid: "yitu",
   //在控制台-我的应用-实时语音转写获取
-  apiKey: "",
+  apiKey: "2258ACC4-199B-4DCB-B6F3-C2439C63E85A",
   file: path.dirname(__filename) + "/test_1.pcm",//请填写您的音频文件路径
   highWaterMark: 6400
 }
@@ -65,11 +67,12 @@ ws.on('message', (data, err) => {
         highWaterMark: config.highWaterMark
       });
       readerStream.on('data', function (chunk) {
+        execSync('sleep 0.2'); // block process for 0.2 second.
         ws.send(chunk)
       });
       readerStream.on('end', function () {
         // 最终帧发送结束
-        ws.send("{\"end\" : true}")
+        ws.send("")
       });
       break
     case 'result':
@@ -78,6 +81,8 @@ ws.on('message', (data, err) => {
       try {
         //let data = JSON.parse(res.data)
         let data = res.data
+        console.log(JSON.stringify(data))
+        /*
         if (!data.cn)
           break;
         rtasrResult[data.seg_id] = data
@@ -97,6 +102,7 @@ ws.on('message', (data, err) => {
           })
 
         }
+        */
       } catch (e) {
         console.log("meet exception: ", e)
       }

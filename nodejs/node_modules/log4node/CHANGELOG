@@ -1,0 +1,6 @@
+CHANGELOG
+
+0.1.2
+
+* feature : getter on log level, thx to @dax
+* feature : specify prefix as function, thx to @dax

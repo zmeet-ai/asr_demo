@@ -1,0 +1,9 @@
+ERROR \d+ : Master started
+ERROR \d+ : WORKER - Hello, I'm a worker
+ERROR \d+ : WORKER - Hello, I'm a worker
+ERROR \d+ : WORKER - Hello, I'm a worker
+ERROR \d+ : WORKER - Hello, I'm a worker
+ERROR \d+ : Worker \d+ died
+ERROR \d+ : Worker \d+ died
+ERROR \d+ : Worker \d+ died
+ERROR \d+ : Worker \d+ died

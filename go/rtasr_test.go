@@ -24,7 +24,7 @@ import (
 	"time"
 )
 
-var HOST = "ai.abcpen.com/v1/ws"
+var HOST = "ai.abcpen.com/v1/asr/ws"
 
 var APPID = ""
 var APPKEY = ""
@@ -47,7 +47,7 @@ func TestWslfasr(t *testing.T) {
 	signa := url.QueryEscape(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
 	requestParam := "appid=" + APPID + "&ts=" + ts + "&signa=" + signa
 
-	conn, err := websocket.Dial("ws://" + HOST + "?" + requestParam, websocket.SupportedProtocolVersion, "http://" + HOST)
+	conn, err := websocket.Dial("wss://" + HOST + "?" + requestParam, websocket.SupportedProtocolVersion, "http://" + HOST)
 	if err != nil {
 		t.Error("err: ", err)
 		return

@@ -47,9 +47,9 @@ public class RTASRTest {
     private static final String SECRET_KEY = "";
 
     // 请求地址
-    private static final String HOST = "ai.abcpen.com/v1/ws";
+    private static final String HOST = "ai.abcpen.com/v1/asr/ws";
 
-    private static final String BASE_URL = "ws://" + HOST;
+    private static final String BASE_URL = "wss://" + HOST;
 
     private static final String ORIGIN = "http://" + HOST;
 
