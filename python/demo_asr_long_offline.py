@@ -27,9 +27,10 @@ async def main():
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
                         help='wave file path', default='./test_1.wav')
     args = parser.parse_args()
-
-    app_id = ""
-    api_key = ""
+    
+    ## 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
+    app_id = "yitu"
+    api_key = "2258ACC4-199B-4DCB-B6F3-C2439C63E85A"
     if (len(app_id)<=0 or len(api_key)<=0):
         print("Please apply appid and appsecret, demo will exit now")
         sys.exit(1)
