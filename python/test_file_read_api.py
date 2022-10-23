@@ -9,6 +9,7 @@ from urllib.parse import quote
 import logging
 import wave
 import os
+import sys
 import argparse
 
 from client_auth_service import get_signature_flytek
@@ -54,11 +55,9 @@ class Client():
                     print("receive result empty")
                     self.close()
                     break
+
                 result_dict = json.loads(result)
-                print(result_dict)
-                """
-                result_dict = json.loads(result)
-                print(result_dict)
+                #print(result_dict)
                 if ("action" not in result_dict):
                     continue
                 # 解析结果
@@ -76,7 +75,7 @@ class Client():
                     print("rtasr error: " + result)
                     self.ws.close()
                     return
-                """
+                
                 
         except websocket.WebSocketConnectionClosedException:
             print("receive result end")
@@ -97,12 +96,15 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./test_1.wav')
+                        help='wave file path', default='./gametest.wav')
     args = parser.parse_args()
     logging.basicConfig()
 
-    app_id = "yitu"
-    api_key = "2258ACC4-199B-4DCB-B6F3-C2439C63E85A"
+    app_id = ""
+    api_key = ""
+    if (len(app_id)<=0 or len(api_key)<=0):
+        print("Please apply appid and appsecret, demo will exit now")
+        sys.exit(1)
 
     client = Client()
     client.send(args.wave_path)
