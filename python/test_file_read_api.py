@@ -1,4 +1,4 @@
-# -*- encoding:utf-8 -*-
+#!/usr/bin/env python3
 from socket import *
 import json
 import time
@@ -7,70 +7,77 @@ from websocket import create_connection
 import websocket
 from urllib.parse import quote
 import logging
+import wave
 import os
 import argparse
 
-from client_auth_service import get_signature_yitu, get_signature_flytek
+from client_auth_service import get_signature_flytek
 
 class Client():
     def __init__(self):
         global args
-        base_url = "wss://ai.abcpen.com/v1/asr/ws"
+        base_url = "wss://{}/v1/asr/ws".format(args.url)
         ts = str(int(time.time()))
 
-        self.end_tag = '{"end" : true}'
-        if (args.style == "yitu"):
-            signa = get_signature_yitu(ts, app_id, api_key)
-        else:
-            signa = get_signature_flytek(ts, app_id, api_key)
+        signa = get_signature_flytek(ts, app_id, api_key)
 
+        temp_url = base_url + "?appid=" + app_id + \
+            "&ts=" + ts + "&signa=" + quote(signa)
+        print("temp_url is: ", temp_url)
         self.ws = create_connection(
-            base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa)+"&style="+args.style)
+            base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa))
         self.trecv = threading.Thread(target=self.recv)
         self.trecv.start()
 
     def send(self, file_path):
-        file_object = open(os.path.join(
-            os.path.dirname(__file__), file_path), 'rb')
-        try:
-            index = 1
-            while True:
-                chunk = file_object.read(6400)
-                if not chunk:
-                    break
-                self.ws.send(chunk, 0x2)
+        wf = wave.open(os.path.join(
+            os.path.dirname(__file__), file_path), "rb")
+        buffer_size = int(wf.getframerate() * 0.2)  # 0.2 seconds of audio
+        while True:
+            data = wf.readframes(buffer_size)
 
-                index += 1
-                time.sleep(0.2)
-        finally:
-            file_object.close()
+            if len(data) == 0:
+                break
 
-        self.ws.send(self.end_tag.encode('utf-8'))
+            self.ws.send(data, 0x2)
+            time.sleep(0.2)
+
+        self.ws.send("")
         print("send end tag success")
 
     def recv(self):
         try:
             while self.ws.connected:
                 result = str(self.ws.recv())
+                #print(result)
                 if len(result) == 0:
-                    print("receive result end")
-                    continue
-
+                    print("receive result empty")
+                    self.close()
+                    break
                 result_dict = json.loads(result)
+                print(result_dict)
+                """
+                result_dict = json.loads(result)
+                print(result_dict)
                 if ("action" not in result_dict):
                     continue
                 # 解析结果
                 if result_dict["action"] == "started":
-                    print(result)
+                    print(result_dict)
 
                 if result_dict["action"] == "result":
                     result_1 = result_dict
+                    # result_2 = json.loads(result_1["cn"])
+                    # result_3 = json.loads(result_2["st"])
+                    # result_4 = json.loads(result_3["rt"])
                     print(result_1["data"])
 
                 if result_dict["action"] == "error":
                     print("rtasr error: " + result)
                     self.ws.close()
                     return
+                """
+                
         except websocket.WebSocketConnectionClosedException:
             print("receive result end")
 
@@ -80,25 +87,22 @@ class Client():
 
 
 if __name__ == '__main__':
+
     global args
 
     parser = argparse.ArgumentParser(description="ASR Server test",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-s', '--style', type=str, metavar='STYLE',
-                        help='api style', default='flytek')
     parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='localhost:3698')
+                        help='server url', default='ai.abcpen.com')
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
                         help='wave file path', default='./test_1.wav')
     args = parser.parse_args()
-
     logging.basicConfig()
 
-    app_id = ""
-    api_key = ""
-    file_path = r"./test_1.pcm"
+    app_id = "yitu"
+    api_key = "2258ACC4-199B-4DCB-B6F3-C2439C63E85A"
 
     client = Client()
-    client.send(file_path)
+    client.send(args.wave_path)
