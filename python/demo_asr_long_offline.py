@@ -72,7 +72,7 @@ async def asr_offline():
 async def main():
     try:
         ## 谨慎使用线上环境并发测试！！！ 非必要情况和生产环境下请严格控制并发在十个以内！！！
-        results = asyncio.gather(*[asr_offline() for i in range(2)])
+        results = asyncio.gather(*[asr_offline() for i in range(10)])
     except KeyboardInterrupt:
         pass
     await results
