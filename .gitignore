@@ -5,3 +5,5 @@ asr_res.log
 asr.log
 *.log
 *.class
+*.sh
+
