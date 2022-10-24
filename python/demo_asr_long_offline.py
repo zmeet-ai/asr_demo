@@ -15,7 +15,7 @@ from urllib.parse import urlencode
 from client_auth_service import get_signature_flytek
 
 
-async def main():
+async def asr_offline():
     global args
 
     parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
@@ -41,8 +41,8 @@ async def main():
         "ts": timestamp,
         "appid": "yitu",
         "signa": signa,
-        "audio_url": "https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3",
-
+        #"audio_url": "https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3",
+        "audio_url": "https://zos.abcpen.com/test/weiya2.wav"
     }
     querys2 = {
         "ts": timestamp,
@@ -68,6 +68,14 @@ async def main():
         response_json = json.loads(response2.text)
         print("\n")
         print(response_json)
+
+async def main():
+    try:
+        ## 谨慎使用线上环境并发测试！！！ 非必要情况和生产环境下请严格控制并发在十个以内！！！
+        results = asyncio.gather(*[asr_offline() for i in range(2)])
+    except KeyboardInterrupt:
+        pass
+    await results
 
 if __name__ == "__main__":
     try:
