@@ -22,9 +22,9 @@ const config = {
   // 请求地址
   hostUrl: "wss://ai.abcpen.com/v1/asr/ws",
   //在控制台-我的应用-实时语音转写获取
-  appid: "yitu",
+  appid: "test1",
   //在控制台-我的应用-实时语音转写获取
-  apiKey: "2258ACC4-199B-4DCB-B6F3-C2439C63E85A",
+  apiKey: "2258ACC4-199B-4DCB-B6F3-C2485C63E85A",
   file: path.dirname(__filename) + "/test_1.pcm",//请填写您的音频文件路径
   highWaterMark: 6400
 }
