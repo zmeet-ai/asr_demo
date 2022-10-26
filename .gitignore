@@ -6,4 +6,4 @@ asr.log
 *.log
 *.class
 *.sh
-/node_modules/
+/nodejs/node_modules/
