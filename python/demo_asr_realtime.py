@@ -13,8 +13,7 @@ import os
 import sys
 import argparse
 
-
-from client_auth_service import  get_signature_flytek
+from client_auth_service import get_signature_flytek
 
 class Client():
     def __init__(self):
@@ -23,8 +22,10 @@ class Client():
         ts = str(int(time.time()))
 
         signa = get_signature_flytek(ts, app_id, api_key)
-        self.end_tag = ''
 
+        temp_url = base_url + "?appid=" + app_id + \
+            "&ts=" + ts + "&signa=" + quote(signa)
+        print("temp_url is: ", temp_url)
         self.ws = create_connection(
             base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa))
         self.trecv = threading.Thread(target=self.recv)
@@ -43,19 +44,21 @@ class Client():
             self.ws.send(data, 0x2)
             time.sleep(0.2)
 
-        self.ws.send(self.end_tag.encode('utf-8'))
+        self.ws.send("")
         print("send end tag success")
 
     def recv(self):
         try:
             while self.ws.connected:
                 result = str(self.ws.recv())
+                #print(result)
                 if len(result) == 0:
                     print("receive result empty")
                     self.close()
-                    continue
-                    # break
+                    break
+
                 result_dict = json.loads(result)
+                #print(result_dict)
                 if ("action" not in result_dict):
                     continue
                 # 解析结果
@@ -64,12 +67,17 @@ class Client():
 
                 if result_dict["action"] == "result":
                     result_1 = result_dict
+                    # result_2 = json.loads(result_1["cn"])
+                    # result_3 = json.loads(result_2["st"])
+                    # result_4 = json.loads(result_3["rt"])
                     print(result_1["data"])
 
                 if result_dict["action"] == "error":
                     print("rtasr error: " + result)
                     self.ws.close()
                     return
+                
+                
         except websocket.WebSocketConnectionClosedException:
             print("receive result end")
 
@@ -92,7 +100,9 @@ if __name__ == '__main__':
                         help='wave file path', default='./gametest.wav')
     args = parser.parse_args()
     logging.basicConfig()
-    
+
+    print("实时语音识别，使用wave包读取语音文件流")
+
     ## 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
     app_id = "test1"
     api_key = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"

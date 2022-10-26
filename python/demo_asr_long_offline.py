@@ -80,6 +80,7 @@ async def main():
 
 if __name__ == "__main__":
     try:
+        print("长语音离线识别演示")
         asyncio.run(main())
     except Exception as e:
         logging.info("Got ctrl+c exception-2: %s, exit process", repr(e))
