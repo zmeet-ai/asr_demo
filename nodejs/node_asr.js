@@ -67,7 +67,7 @@ ws.on('message', (data, err) => {
         highWaterMark: config.highWaterMark
       });
       readerStream.on('data', function (chunk) {
-        execSync('sleep 0.2'); // block process for 0.2 second.
+        execSync('sleep 0.1'); // block process for 0.2 second.
         ws.send(chunk)
       });
       readerStream.on('end', function () {
@@ -82,27 +82,6 @@ ws.on('message', (data, err) => {
         //let data = JSON.parse(res.data)
         let data = res.data
         console.log(JSON.stringify(data))
-        /*
-        if (!data.cn)
-          break;
-        rtasrResult[data.seg_id] = data
-        // 把转写结果解析为句子
-        if (data.cn.st.type == 0) {
-          rtasrResult.forEach(i => {
-            let str = "实时转写"
-            str += (i.cn.st.type == 0) ? "【最终】识别结果：" : "【中间】识别结果："
-            i.cn.st.rt.forEach(j => {
-              j.ws.forEach(k => {
-                k.cw.forEach(l => {
-                  str += l.w
-                })
-              })
-            })
-            log.info(str)
-          })
-
-        }
-        */
       } catch (e) {
         console.log("meet exception: ", e)
       }
