@@ -1,11 +1,3 @@
-[TOC]
-
-
-# 语音sdk目录
-* [实时语音识别](https://github.com/zmeet-ai/asr_demo/blob/main/doc/asr/rtasr/%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E8%BD%AC%E5%86%99%20API%20%E6%96%87%E6%A1%A3-websocket.md)
-* [长语音（离线语音文件）识别](https://github.com/zmeet-ai/asr_demo/blob/main/doc/asr/lfasr/%E9%95%BF%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%ABAPI%E6%96%87%E6%A1%A3.md)
-* [语音合成](https://github.com/zmeet-ai/asr_demo/blob/main/doc/tts/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90.md)
-
 # 实时语音转写API文档
 
 ## 接口说明
