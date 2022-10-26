@@ -79,7 +79,7 @@
 备注：
 
 - apiKey：接口密钥，在应用中添加实时语音转写服务时自动生成，调用方注意保管；
-- signa的生成公式：HmacSHA1(MD5(appid + ts), api_key)，具体的生成方法详见【[调用示例](https://api.abcpen.com/doc/asr/rtasr/API.html#调用示例)】；
+- signa的生成公式：HmacSHA1(MD5(appid + ts), api_key)，具体的生成方法参考本git实例代码；
 
 ####请求示例
 
