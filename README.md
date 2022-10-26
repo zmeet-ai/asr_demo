@@ -91,13 +91,13 @@
 
 结果格式为json，字段说明如下：
 
-| 参数   | 类型   | 说明                                                         |
-| :----- | :----- | :----------------------------------------------------------- |
-| action | string | 结果标识，started:握手，result:结果，error:异常              |
-| code   | string | 结果码(具体见[错误码](https://api.abcpen.com/doc/asr/rtasr/API.html#错误码)) |
-| data   | string | 结果数据                                                     |
-| desc   | string | 描述                                                         |
-| sid    | string | 会话ID                                                       |
+| 参数   | 类型   | 说明                                            |
+| :----- | :----- | :---------------------------------------------- |
+| action | string | 结果标识，started:握手，result:结果，error:异常 |
+| code   | string | 结果码(具体见[错误码](#错误码))                 |
+| data   | string | 结果数据                                        |
+| desc   | string | 描述                                            |
+| sid    | string | 会话ID                                          |
 
 其中sid字段主要用于DEBUG追查问题，如果出现问题，可以提供sid帮助确认问题。
 
@@ -282,19 +282,20 @@ IP白名单规则
 
 ## 错误码
 
-| 错误码 | 描述                    | 说明                  | 处理方式                              |
-| :----- | :---------------------- | :-------------------- | :------------------------------------ |
-| 0      | success                 | 成功                  |                                       |
-| 10105  | illegal access          | 没有权限              | 检查apiKey，ip，ts等授权参数是否正确  |
-| 10106  | invalid parameter       | 无效参数              | 上传必要的参数， 检查参数格式以及编码 |
-| 10107  | illegal parameter       | 非法参数值            | 检查参数值是否超过范围或不符合要求    |
-| 10110  | no license              | 无授权许可            | 检查参数值是否超过范围或不符合要求    |
-| 10700  | engine error            | 引擎错误              | 提供接口返回值，向服务提供商反馈      |
-| 10202  | websocket connect error | websocket连接错误     | 检查网络是否正常                      |
-| 10204  | websocket write error   | 服务端websocket写错误 | 检查网络是否正常，向服务提供商反馈    |
-| 10205  | websocket read error    | 服务端websocket读错误 | 检查网络是否正常，向服务提供商反馈    |
-| 16003  | basic component error   | 基础组件异常          | 重试或向服务提供商反馈                |
-| 10800  | over max connect limit  | 超过授权的连接数      | 确认连接数是否超过授权的连接数        |
+| 错误码 | 描述                               | 说明                     | 处理方式                                     |
+| :----- | :--------------------------------- | :----------------------- | :------------------------------------------- |
+| 0      | success                            | 成功                     |                                              |
+| 10105  | illegal access                     | 没有权限                 | 检查apiKey，ip，ts等授权参数是否正确         |
+| 10106  | invalid parameter                  | 无效参数                 | 上传必要的参数， 检查参数格式以及编码        |
+| 10107  | illegal parameter                  | 非法参数值               | 检查参数值是否超过范围或不符合要求           |
+| 10109  | audio url is not valid http(s) url | audio_url不是http[s]链接 | 长语音识别的时候，audio_url必须是http[s]链接 |
+| 10110  | no license                         | 无授权许可               | 检查参数值是否超过范围或不符合要求           |
+| 10700  | engine error                       | 引擎错误                 | 提供接口返回值，向服务提供商反馈             |
+| 10202  | websocket connect error            | websocket连接错误        | 检查网络是否正常                             |
+| 10204  | websocket write error              | 服务端websocket写错误    | 检查网络是否正常，向服务提供商反馈           |
+| 10205  | websocket read error               | 服务端websocket读错误    | 检查网络是否正常，向服务提供商反馈           |
+| 16003  | basic component error              | 基础组件异常             | 重试或向服务提供商反馈                       |
+| 10800  | over max connect limit             | 超过授权的连接数         | 确认连接数是否超过授权的连接数               |
 
 ## 常见问题
 
