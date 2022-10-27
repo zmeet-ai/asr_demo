@@ -27,11 +27,11 @@ async def asr_offline(url_wave):
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
                         help='wave file path', default='./test_1.wav')
     args = parser.parse_args()
-    
-    ## 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
+
+    # 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
     app_id = "test1"
     api_key = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
-    if (len(app_id)<=0 or len(api_key)<=0):
+    if (len(app_id) <= 0 or len(api_key) <= 0):
         print("Please apply appid and appsecret, demo will exit now")
         sys.exit(1)
     timestamp = str(int(time.time()))
@@ -41,7 +41,7 @@ async def asr_offline(url_wave):
         "ts": timestamp,
         "appid": "test1",
         "signa": signa,
-        #"audio_url": "https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3",
+        # "audio_url": "https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3",
         "audio_url": url_wave
     }
     querys2 = {
@@ -66,21 +66,31 @@ async def asr_offline(url_wave):
         response_json = json.loads(response2.text)
     else:
         response_json = json.loads(response2.text)
-        print("\n")
-        print(response_json)
+
+        return {"url": url_wave, "asr": response_json}
+
 
 async def main():
     try:
-        ## 谨慎使用线上环境并发测试！！！ 非必要情况和生产环境下请严格控制并发在十个以内！！！
+        # 谨慎使用线上环境并发测试！！！ 非必要情况和生产环境下请严格控制并发在十个以内！！！
         #results = asyncio.gather(*[asr_offline("http://esdic.ectanger.com/dic/3-1.wav") for i in range(1)])
-        results = asyncio.gather(asr_offline("http://esdic.ectanger.com/dic/3-1.wav"),asr_offline("http://esdic.ectanger.com/dic/3-2.wav"), asr_offline("http://esdic.ectanger.com/dic/5-1.wav"), asr_offline("http://esdic.ectanger.com/dic/5-2.wav"))
+        results = await asyncio.gather(asr_offline("http://esdic.ectanger.com/dic/3-1.wav"),
+                                       asr_offline("http://esdic.ectanger.com/dic/5-1.wav"),
+                                       # asr_offline("http://esdic.ectanger.com/dic/5-2.wav")
+                                       )
+        print("\n\nWill output the final result in order!")
+        for result in results:
+            if result:
+                print("Result for {} is ---------------------> {}".format(result["url"], result["asr"]))
+            print("\n\n\n")
+
     except KeyboardInterrupt:
         pass
     await results
 
 if __name__ == "__main__":
     try:
-        print("长语音离线识别演示")
+        print("长语音离线识别演示, 演示异步提交请求服务时，返回识别结果依然有序; 该demo返回异步数组请求的json key value pair！")
         asyncio.run(main())
     except Exception as e:
         logging.info("Got ctrl+c exception-2: %s, exit process", repr(e))

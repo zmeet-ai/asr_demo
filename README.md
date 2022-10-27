@@ -59,6 +59,7 @@
 | lang  | string | 否   | 实时语音转写语种，不传默认为中文                             | 语种类型：中文、中英混合识别：cn；英文：en。传参示例如："lang=en" 若未授权无法使用会报错10110 |
 | punc  | string | 否   | 标点过滤控制，默认返回标点，punc=0会过滤结果中的标点         | 0                                                            |
 | pd    | string | 否   | 垂直领域个性化参数: 法院: court 教育: edu 金融: finance 医疗: medical 科技: tech 运营商: isp 政府: gov 电商: ecom 军事: mil 企业: com 生活: life 汽车: car | 设置示例：pd="edu" 参数pd为非必须设置，不设置参数默认为通用  |
+|       |        |      |                                                              |                                                              |
 
 #### signa生成
 

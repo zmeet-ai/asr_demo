@@ -12,6 +12,7 @@ import wave
 import os
 import sys
 import argparse
+import multiprocessing
 
 from client_auth_service import get_signature_flytek
 
@@ -85,6 +86,10 @@ class Client():
         self.ws.close()
         print("connection closed")
 
+def zmq_daemon():
+    global args
+    client = Client()
+    client.send(args.wave_path)
 
 if __name__ == '__main__':
 
@@ -110,5 +115,9 @@ if __name__ == '__main__':
         print("Please apply appid and appsecret, demo will exit now")
         sys.exit(1)
 
-    client = Client()
-    client.send(args.wave_path)
+    #for i in range(5):
+        #client = Client()
+        #client.send(args.wave_path)
+    mp = multiprocessing.Process(target=zmq_daemon)
+    #mp.daemon = True
+    mp.start()
