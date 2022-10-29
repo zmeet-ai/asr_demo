@@ -74,7 +74,7 @@ async def main():
     try:
         # 谨慎使用线上环境并发测试！！！ 非必要情况和生产环境下请严格控制并发在十个以内！！！
         #results = asyncio.gather(*[asr_offline("http://esdic.ectanger.com/dic/3-1.wav") for i in range(1)])
-        results = await asyncio.gather(asr_offline("http://esdic.ectanger.com/dic/3-1.wav"),
+        results = await asyncio.gather(asr_offline("https://cos.abcpen.com/asr/audio/f6d265a58b3201c7df3d4c19e1bc2c29.wav"),
                                        asr_offline("http://esdic.ectanger.com/dic/5-1.wav"),
                                        # asr_offline("http://esdic.ectanger.com/dic/5-2.wav")
                                        )
