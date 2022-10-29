@@ -1,7 +1,15 @@
 # 语音转写API文档
 
 ## [实时语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/README.md)
-## [离线长语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/doc/Readme_long_asr.md)
+## [离线长语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/doc/ReadME.md)
+
+
+# ZmeetAI 语音识别优势
+
+* **全球领先的声纹识别，返回结果字段中精准识别说话人ID**
+* **庞大的声纹数据库，海量音视频文件中毫秒级返回说话人的片段音视频信息**
+* **全球领先的降噪算法，返回的音视频文件，可包含降噪后的清晰语音**
+* **全球领先的高精准中英文等语音识别算法**
 
 # 实时语音转写API文档
 
