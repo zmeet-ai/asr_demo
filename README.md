@@ -1,6 +1,6 @@
 # 语音转写API文档
 
-## [实时语音转写]（#实时语音转写API文档)
+## [实时语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/README.md)
 ## [离线长语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/doc/Readme_long_asr.md)
 
 # 实时语音转写API文档
