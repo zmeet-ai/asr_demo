@@ -15,7 +15,7 @@ from urllib.parse import urlencode
 from auth.client_auth_service import get_signature_flytek
 
 
-async def asr_offline(url_wave):
+async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
     global args
 
     parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
@@ -37,32 +37,36 @@ async def asr_offline(url_wave):
     timestamp = str(int(time.time()))
 
     signa = get_signature_flytek(timestamp, app_id, api_key)
-    querys = {
+    query_post_apply = {
         "ts": timestamp,
         "appid": "test1",
         "signa": signa,
         # "audio_url": "https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3",
-        "audio_url": url_wave
+        "audio_url": url_wave,
+        "audio_encode" : audio_encode,
+        "audio_samplerate": audio_sample
+
     }
-    querys2 = {
+    query_post_result = {
         "ts": timestamp,
         "appid": "test1",
         "signa": signa
     }
     url = "https://{}/v1/asr/long".format(args.url)
-    response = requests.post(url, querys)
+    print("The requst para is {}".format(query_post_apply))
+    response = requests.post(url, query_post_apply)
     print(response.text)
 
     response_json = json.loads(response.text)
-    querys2["task_id"] = response_json["data"]["task_id"]
+    query_post_result["task_id"] = response_json["data"]["task_id"]
 
-    response2 = requests.get(url, querys2)
+    response2 = requests.get(url, query_post_result)
     response_json = json.loads(response2.text)
     bar = Bar('Processing', max=100)
     while (response_json["code"] != '0'):
         bar.next()
         await asyncio.sleep(3)
-        response2 = requests.get(url, querys2)
+        response2 = requests.get(url, query_post_result)
         response_json = json.loads(response2.text)
     else:
         response_json = json.loads(response2.text)
@@ -74,8 +78,8 @@ async def main():
     try:
         # 谨慎使用线上环境并发测试！！！ 非必要情况和生产环境下请严格控制并发在十个以内！！！
         #results = asyncio.gather(*[asr_offline("http://esdic.ectanger.com/dic/3-1.wav") for i in range(1)])
-        results = await asyncio.gather(asr_offline("http://esdic.ectanger.com/dic/5-2.wav"),
-                                       asr_offline("http://esdic.ectanger.com/dic/5-1.wav")
+        results = await asyncio.gather(asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3", audio_sample="48000"),
+                                       asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/b6a2c7ac-52c8-11ed-961e-00155dc6cbed.mp3", audio_sample="48000")
                                        )
         print("\n\nWill output the final result in order!")
         for result in results:
