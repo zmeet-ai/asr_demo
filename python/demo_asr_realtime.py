@@ -14,7 +14,7 @@ import sys
 import argparse
 import multiprocessing
 
-from client_auth_service import get_signature_flytek
+from auth.client_auth_service import get_signature_flytek
 
 class Client():
     def __init__(self):
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./gametest.wav')
+                        help='wave file path', default='./dataset/gametest.wav')
     args = parser.parse_args()
     logging.basicConfig()
 

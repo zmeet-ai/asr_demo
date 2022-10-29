@@ -12,7 +12,7 @@ import argparse
 from progress.bar import Bar
 from urllib.parse import urlencode
 
-from client_auth_service import get_signature_flytek
+from auth.client_auth_service import get_signature_flytek
 
 
 async def asr_offline(url_wave):
@@ -25,7 +25,7 @@ async def asr_offline(url_wave):
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./test_1.wav')
+                        help='wave file path', default='./dataset/test_1.wav')
     args = parser.parse_args()
 
     # 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
@@ -74,9 +74,8 @@ async def main():
     try:
         # 谨慎使用线上环境并发测试！！！ 非必要情况和生产环境下请严格控制并发在十个以内！！！
         #results = asyncio.gather(*[asr_offline("http://esdic.ectanger.com/dic/3-1.wav") for i in range(1)])
-        results = await asyncio.gather(asr_offline("https://cos.abcpen.com/asr/audio/f6d265a58b3201c7df3d4c19e1bc2c29.wav"),
-                                       asr_offline("http://esdic.ectanger.com/dic/5-1.wav"),
-                                       # asr_offline("http://esdic.ectanger.com/dic/5-2.wav")
+        results = await asyncio.gather(asr_offline("http://esdic.ectanger.com/dic/5-2.wav"),
+                                       asr_offline("http://esdic.ectanger.com/dic/5-1.wav")
                                        )
         print("\n\nWill output the final result in order!")
         for result in results:
