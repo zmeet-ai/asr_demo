@@ -105,7 +105,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./dataset/gametest.wav')
+                        help='wave file path', default='./dataset/yunxiao.wav')
     args = parser.parse_args()
     logging.basicConfig()
 
