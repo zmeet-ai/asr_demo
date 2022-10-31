@@ -41,10 +41,10 @@ import javax.net.ssl.X509TrustManager;
 public class RTASRTest {
 
     // appid
-    private static final String APPID = "";
+    private static final String APPID = "test1";
 
     // appid对应的secret_key
-    private static final String SECRET_KEY = "";
+    private static final String SECRET_KEY = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A";
 
     // 请求地址
     private static final String HOST = "ai.abcpen.com/v1/asr/ws";

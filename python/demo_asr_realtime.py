@@ -16,6 +16,8 @@ import multiprocessing
 
 from auth.client_auth_service import get_signature_flytek
 
+time_per_chunk = 0.1
+
 class Client():
     def __init__(self):
         global args
@@ -24,11 +26,9 @@ class Client():
 
         signa = get_signature_flytek(ts, app_id, api_key)
 
-        temp_url = base_url + "?appid=" + app_id + \
-            "&ts=" + ts + "&signa=" + quote(signa)
-        print("temp_url is: ", temp_url)
-        self.ws = create_connection(
-            base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa))
+        url_asr_apply = base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa)
+        print("url_asr_apply is: ", url_asr_apply)
+        self.ws = create_connection(url_asr_apply)
         self.trecv = threading.Thread(target=self.recv)
         self.trecv.start()
 
@@ -36,6 +36,7 @@ class Client():
         wf = wave.open(os.path.join(
             os.path.dirname(__file__), file_path), "rb")
         buffer_size = int(wf.getframerate() * 0.2)  # 0.2 seconds of audio
+        sleep_time = time.time()
         while True:
             data = wf.readframes(buffer_size)
 
@@ -43,7 +44,9 @@ class Client():
                 break
 
             self.ws.send(data, 0x2)
-            time.sleep(0.2)
+            if (time.time() - sleep_time) < time_per_chunk:
+                time.sleep(time_per_chunk - (time.time() - sleep_time))
+            sleep_time = time.time()
 
         self.ws.send("")
         print("send end tag success")
