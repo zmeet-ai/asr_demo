@@ -48,7 +48,13 @@ class Client():
                 time.sleep(time_per_chunk - (time.time() - sleep_time))
             sleep_time = time.time()
 
+        # 目前下面两种方式都支持，其中发送end标志是科大讯飞风格，20221101
+        # Solution 1 
+        #self.end_tag = "{\"end\": true}"
+        #self.ws.send(self.end_tag.encode('utf-8'))
+        # Solution 2
         self.ws.send("")
+
         print("send end tag success")
 
     def recv(self):
