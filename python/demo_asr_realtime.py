@@ -24,7 +24,7 @@ class Client():
         base_url = "wss://{}/v1/asr/ws".format(args.url)
         ts = str(int(time.time()))
 
-        signa = get_signature_flytek(ts, app_id, api_key)
+        signa = get_signature_flytek(ts, app_id, app_secret)
 
         url_asr_apply = base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa)
         print("url_asr_apply is: ", url_asr_apply)
@@ -105,7 +105,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./dataset/yunxiao.wav')
+                        help='wave file path', default='./dataset/test_1.wav')
     args = parser.parse_args()
     logging.basicConfig()
 
@@ -113,8 +113,8 @@ if __name__ == '__main__':
 
     ## 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
     app_id = "test1"
-    api_key = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
-    if (len(app_id)<=0 or len(api_key)<=0):
+    app_secret = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
+    if (len(app_id)<=0 or len(app_secret)<=0):
         print("Please apply appid and appsecret, demo will exit now")
         sys.exit(1)
 
