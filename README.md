@@ -1,7 +1,7 @@
 # 语音转写API文档
 
 ## [实时语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/README.md)
-## [离线长语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/doc/ReadME.md)
+## [离线长语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/doc/README.md)
 
 
 # ZmeetAI 语音识别优势
