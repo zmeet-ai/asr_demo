@@ -21,12 +21,12 @@ time_per_chunk = 0.1
 class Client():
     def __init__(self):
         global args
-        base_url = "wss://{}/v1/asr/ws".format(args.url)
+        base_url = "ws://{}/v1/asr/ws".format(args.url)
         ts = str(int(time.time()))
 
         signa = get_signature_flytek(ts, app_id, app_secret)
 
-        url_asr_apply = base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa)
+        url_asr_apply = base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa) + "&asr_type=2"
         print("url_asr_apply is: ", url_asr_apply)
         self.ws = create_connection(url_asr_apply)
         self.trecv = threading.Thread(target=self.recv)

@@ -44,7 +44,8 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
         # "audio_url": "https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3",
         "audio_url": url_wave,
         "audio_encode" : audio_encode,
-        "audio_samplerate": audio_sample
+        "audio_samplerate": audio_sample,
+        "has_participle" : "false"
 
     }
     query_post_result = {
