@@ -20,7 +20,7 @@ const {execSync} = require('child_process');
 // 系统配置
 const config = {
   // 请求地址
-  hostUrl: "ws://127.0.0.1:3698/v1/asr/ws",
+  hostUrl: "ws://ai.abcpen.com/v1/asr/ws",
   //在控制台-我的应用-实时语音转写获取
   appid: "test1",
   //在控制台-我的应用-实时语音转写获取
