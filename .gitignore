@@ -5,5 +5,7 @@ asr_res.log
 asr.log
 *.log
 *.class
+/java/bin/
+/java/.idea/
 *.sh
 /nodejs/node_modules/
