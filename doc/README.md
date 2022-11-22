@@ -129,7 +129,7 @@ b. 仅 wav封装的pcm格式音频支持 8 bits采样精度
 ####请求示例
 
 ```text
-	ws://ai.abcpen.com/v1/asr/ws?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
+	https://ai.abcpen.com/v1/asr/long?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
 ```
 
 #### 返回值
