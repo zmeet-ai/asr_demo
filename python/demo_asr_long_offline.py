@@ -21,7 +21,7 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
     parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='ai.abcpen.com')
+                        help='server url', default='ai-test.abcpen.com')
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
@@ -44,7 +44,7 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
         # "audio_url": "https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3",
         "audio_url": url_wave,
         "audio_encode" : audio_encode,
-        "audio_samplerate": audio_sample,
+        "audio_sample_rate": audio_sample,
         "has_participle" : "false"
 
     }
