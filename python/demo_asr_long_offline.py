@@ -82,7 +82,7 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
             print("\r\nother error-code: {}, desc: {}".format(
                 response_json["code"], response_json["desc"]))
             return {"url": url_wave, "asr": response_json["desc"]}
-            
+
     else:
         response_json = json.loads(response2.text)
 
@@ -93,13 +93,10 @@ async def main():
     try:
         # 谨慎使用线上环境并发测试！！！ 非必要情况和生产环境下请严格控制并发在十个以内！！！
         #results = asyncio.gather(*[asr_offline("http://esdic.ectanger.com/dic/3-1.wav") for i in range(1)])
-        # results = await asyncio.gather(asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3", audio_sample="48000"),
-        #                               asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/b6a2c7ac-52c8-11ed-961e-00155dc6cbed.mp3", audio_sample="48000")
-        #                               )
-        results = await asyncio.gather(  # asr_offline("https://zos.abcpen.com//test/asr/5e988b68-4241-4c05-ab99-2718aa78df69.wav", audio_encode="pcm",audio_sample="16000"),
-            asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3",
-                        )
-        )
+        results = await asyncio.gather(asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3", audio_sample="48000"),
+                                       asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/b6a2c7ac-52c8-11ed-961e-00155dc6cbed.mp3", audio_sample="48000")
+                                       )
+
         print("\n\nWill output the final result in order!")
         for result in results:
             if result:
