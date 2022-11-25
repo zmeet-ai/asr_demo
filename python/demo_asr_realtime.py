@@ -77,9 +77,6 @@ class Client():
 
                 if result_dict["action"] == "result":
                     result_1 = result_dict
-                    # result_2 = json.loads(result_1["cn"])
-                    # result_3 = json.loads(result_2["st"])
-                    # result_4 = json.loads(result_3["rt"])
                     print(result_1["data"])
 
                 if result_dict["action"] == "error":
