@@ -88,7 +88,7 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
 
 async def main():
     try:
-        # 谨慎使用线上环境并发测试！！！ 非必要情况和生产环境下请严格控制并发在十个以内！！！
+        # 线上环境单个用户最大并发控制在20个以内，如果需要更大并发，请向商务申请（手机：18605811078）
         #results = asyncio.gather(*[asr_offline("http://esdic.ectanger.com/dic/3-1.wav") for i in range(1)])
         results = await asyncio.gather(asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3", audio_sample="48000"),
                                        asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/b6a2c7ac-52c8-11ed-961e-00155dc6cbed.mp3", audio_sample="48000")
