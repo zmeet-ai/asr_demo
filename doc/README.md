@@ -220,21 +220,23 @@ IP白名单规则
 
 ### （四）、 错误码
 
-| 错误码 | 描述                                                         | 说明                     | 处理方式                                                    |
-| :----- | :----------------------------------------------------------- | :----------------------- | :---------------------------------------------------------- |
-| 0      | success                                                      | 成功                     |                                                             |
-| -1     | in progress                                                  | 识别中                   | 请继续重试                                                  |
-| -2     | audio encode error                                           | 音频编码错误             | 请编码成正确的格式，再提交请求                              |
-| 10105  | illegal access                                               | 没有权限                 | 检查apiKey，ip，ts等授权参数是否正确                        |
-| 10106  | invalid parameter                                            | 无效参数                 | 上传必要的参数， 检查参数格式以及编码                       |
-| 10107  | illegal parameter                                            | 非法参数值               | 检查参数值是否超过范围或不符合要求                          |
-| 10109  | audio url is not valid http(s) url                           | audio_url不是http[s]链接 | 长语音识别的时候，audio_url必须是http[s]链接                |
-| 10110  | no license                                                   | 无授权许可               | 检查参数值是否超过范围或不符合要求                          |
-| 10700  | engine error                                                 | 引擎错误                 | 提供接口返回值，向服务提供商反馈                            |
-| 10701  | Audio encode error, only support pcm, aac, mpeg2, opus and flac | 音频编码错误             | 支持pcm, aac, mpeg2, opus 和 flac这几种编码，请选择其中一种 |
-| 10702  | Audio sample error, only support 8000、16000、44100 and 48000 Hz | 音频采样率错误           | 支持 8000、16000、44100 和 48000 Hz，请选择其中一种         |
-| 10202  | websocket connect error                                      | websocket连接错误        | 检查网络是否正常                                            |
-| 10204  | websocket write error                                        | 服务端websocket写错误    | 检查网络是否正常，向服务提供商反馈                          |
-| 10205  | websocket read error                                         | 服务端websocket读错误    | 检查网络是否正常，向服务提供商反馈                          |
-| 16003  | basic component error                                        | 基础组件异常             | 重试或向服务提供商反馈                                      |
-| 10800  | over max connect limit                                       | 超过授权的连接数         | 确认连接数是否超过授权的连接数                              |
+下面的错误码，重点关注0，-1返回value（返回数字码是字符型，如'0', '-1')
+
+| 错误码 | 描述                                                         | 说明                     | 处理方式                                                     |
+| :----- | :----------------------------------------------------------- | :----------------------- | :----------------------------------------------------------- |
+| 0      | success                                                      | 成功                     |                                                              |
+| -1     | in progress                                                  | 识别中                   | 请继续重试(**没计算完毕，继续轮询**)，**重点关注**           |
+| -2     | audio encode error                                           | 音频编码错误             | 请编码成正确的格式，再提交请求; 如果提交的文件没有人说话，这个场景会碰到 |
+| 10105  | illegal access                                               | 没有权限                 | 检查apiKey，ip，ts等授权参数是否正确                         |
+| 10106  | invalid parameter                                            | 无效参数                 | 上传必要的参数， 检查参数格式以及编码                        |
+| 10107  | illegal parameter                                            | 非法参数值               | 检查参数值是否超过范围或不符合要求                           |
+| 10109  | audio url is not valid http(s) url                           | audio_url不是http[s]链接 | 长语音识别的时候，audio_url必须是http[s]链接                 |
+| 10110  | no license                                                   | 无授权许可               | 检查参数值是否超过范围或不符合要求                           |
+| 10700  | engine error                                                 | 引擎错误                 | 提供接口返回值，向服务提供商反馈                             |
+| 10701  | Audio encode error, only support pcm, aac, mpeg2, opus and flac | 音频编码错误             | 支持pcm, aac, mpeg2, opus 和 flac这几种编码，请选择其中一种  |
+| 10702  | Audio sample error, only support 8000、16000、44100 and 48000 Hz | 音频采样率错误           | 支持 8000、16000、44100 和 48000 Hz，请选择其中一种          |
+| 10202  | websocket connect error                                      | websocket连接错误        | 检查网络是否正常                                             |
+| 10204  | websocket write error                                        | 服务端websocket写错误    | 检查网络是否正常，向服务提供商反馈                           |
+| 10205  | websocket read error                                         | 服务端websocket读错误    | 检查网络是否正常，向服务提供商反馈                           |
+| 16003  | basic component error                                        | 基础组件异常             | 重试或向服务提供商反馈                                       |
+| 10800  | over max connect limit                                       | 超过授权的连接数         | 确认连接数是否超过授权的连接数                               |
