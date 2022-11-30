@@ -21,7 +21,7 @@ time_per_chunk = 0.1
 class Client():
     def __init__(self):
         global args
-        base_url = "ws://{}/v1/asr/ws".format(args.url)
+        base_url = "wss://{}/v1/asr/ws".format(args.url)
         ts = str(int(time.time()))
 
         signa = get_signature_flytek(ts, app_id, app_secret)
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="ASR Server test",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='127.0.0.1:3698')
+                        help='server url', default='ai.abcpen.com')
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
