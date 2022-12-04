@@ -19,7 +19,7 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
     parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='127.0.0.1:3698')
+                        help='server url', default='ai.abcpen.com')
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
@@ -50,7 +50,7 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
         "appid": "test1",
         "signa": signa
     }
-    url = "http://{}/v1/asr/long".format(args.url)
+    url = "https://{}/v1/asr/long".format(args.url)
     print("The requst para is {}".format(query_post_apply))
     response = requests.post(url, query_post_apply)
     print(response.text)
