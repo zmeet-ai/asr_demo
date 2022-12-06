@@ -30,7 +30,7 @@
 | 内容     | 说明                                                         |
 | :------- | ------------------------------------------------------------ |
 | 请求协议 | ws[s] (为提高安全性，强烈推荐wss)                            |
-| 请求地址 | ws[s]: //ai.abcpen.com/v1/asr/ws?{请求参数} *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
+| 请求地址 | ws[s]: //translate.abcpen.com/v1/asr/ws?{请求参数} *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
 | 接口鉴权 | 签名机制，详见 [signa生成](#signa生成)                       |
 | 响应格式 | 统一采用JSON格式                                             |
 | 开发语言 | 任意，只要可以向笔声云服务发起WebSocket请求的均可            |
@@ -49,9 +49,9 @@
 接口地址
 
 ```text
-    ws://ai.abcpen.com/v1/asr/ws?{请求参数}
+    ws://translate.abcpen.com/v1/asr/ws?{请求参数}
     或
-    wss://ai.abcpen.com/v1/asr/ws?{请求参数}
+    wss://translate.abcpen.com/v1/asr/ws?{请求参数}
 ```
 
 参数格式
@@ -214,7 +214,7 @@ public class EncryptUtil {
 ####请求示例
 
 ```text
-	wss://ai.abcpen.com/v1/asr/ws?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
+	wss://translate.abcpen.com/v1/asr/ws?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
 ```
 
 
