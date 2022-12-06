@@ -15,3 +15,10 @@ def get_signature_flytek(ts, app_id, app_secret):
     signa = base64.b64encode(signa)
     signa = str(signa, 'utf-8')
     return signa
+
+def get_signature(timestamp, dev_id, dev_key):
+    ts = str(timestamp)
+    id_ts = str(dev_id) + ts
+    signature = hmac.new(str(dev_key).encode(), id_ts.encode(),
+                         digestmod=hashlib.sha256).hexdigest()
+    return signature

@@ -14,7 +14,7 @@ import sys
 import argparse
 import multiprocessing
 
-from auth.client_auth_service import get_signature_flytek
+from auth.client_auth_service import get_signature_flytek, get_signature
 
 time_per_chunk = 0.1
 
@@ -105,11 +105,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="ASR Server test",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='ai.abcpen.com')
+                        help='server url', default='translate.abcpen.com')
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./dataset/gametest.wav')
+                        help='wave file path', default='./dataset/yunxiao.wav')
     args = parser.parse_args()
     logging.basicConfig()
 
