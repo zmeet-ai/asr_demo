@@ -1,7 +1,4 @@
-# 语音转写API文档
-
-## [实时语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/README.md)
-## [离线长语音转写](https://github.com/zmeet-ai/asr_demo/blob/main/doc/README.md)
+# 实时语音转写与同声传译API文档
 
 # 一、语音识别优势
 
@@ -44,7 +41,7 @@
 
 
 ## 4、接口调用流程
-*注：* 若需配置IP白名单，请发送邮件到support@abcpen.com
+
 实时语音转写接口调用包括两个阶段：握手阶段和实时通信阶段。
 
 ### （1）、握手阶段
@@ -81,6 +78,120 @@
 
 #### （2）、signa生成
 
+##### a. python示例（）
+
+```python
+import hashlib
+import hmac
+import time
+import base64
+
+def get_signature_flytek(ts, app_id, app_secret):
+    tt = (app_id + ts).encode('utf-8')
+    md5 = hashlib.md5()
+    md5.update(tt)
+    baseString = md5.hexdigest()
+    baseString = bytes(baseString, encoding='utf-8')
+
+    apiKey = app_secret.encode('utf-8')
+    signa = hmac.new(apiKey, baseString, hashlib.sha1).digest()
+    signa = base64.b64encode(signa)
+    signa = str(signa, 'utf-8')
+    return signa
+```
+
+##### b. Java示例
+
+* Java示例(具体参考github Java目录代码)
+
+```java
+    // 生成握手参数
+    public static String getHandShakeParams(String appId, String secretKey) {
+        String ts = System.currentTimeMillis() / 1000 + "";
+        String signa = "";
+        try {
+            signa = EncryptUtil.HmacSHA1Encrypt(EncryptUtil.MD5(appId + ts), secretKey);
+            return "?appid=" + appId + "&ts=" + ts + "&signa=" + URLEncoder.encode(signa, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+```
+
+* Java基础工具类
+
+```java
+package com.abcpen.ai.rtasr.util;
+
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
+
+public class EncryptUtil {
+
+    /**
+     * 加密数字签名（基于HMACSHA1算法）
+     *
+     * @param encryptText
+     * @param encryptKey
+     * @return
+     * @throws SignatureException
+     */
+    public static String HmacSHA1Encrypt(String encryptText, String encryptKey) throws SignatureException {
+        byte[] rawHmac = null;
+        try {
+            byte[] data = encryptKey.getBytes(StandardCharsets.UTF_8);
+            SecretKeySpec secretKey = new SecretKeySpec(data, "HmacSHA1");
+            Mac mac = Mac.getInstance("HmacSHA1");
+            mac.init(secretKey);
+            byte[] text = encryptText.getBytes(StandardCharsets.UTF_8);
+            rawHmac = mac.doFinal(text);
+        } catch (InvalidKeyException e) {
+            throw new SignatureException("InvalidKeyException:" + e.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+            throw new SignatureException("NoSuchAlgorithmException:" + e.getMessage());
+        }
+        String oauth = new String(Base64.encodeBase64(rawHmac));
+
+        return oauth;
+    }
+
+    public final static String MD5(String pstr) {
+        char[] md5String = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        try {
+            byte[] btInput = pstr.getBytes();
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            mdInst.update(btInput);
+            byte[] md = mdInst.digest();
+            int j = md.length;
+            char[] str = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) { // i = 0
+                byte byte0 = md[i]; // 95
+                str[k++] = md5String[byte0 >>> 4 & 0xf]; // 5
+                str[k++] = md5String[byte0 & 0xf]; // F
+            }
+
+            return new String(str);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+}
+```
+
+* 加密规则说明
+
 1.获取baseString，baseString由app_id和当前时间戳ts拼接而成，假如app_id为595f23df，ts为1512041814，则baseString为
 
 > 595f23df1512041814
@@ -105,6 +216,8 @@
 ```text
 	wss://ai.abcpen.com/v1/asr/ws?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
 ```
+
+
 
 #### （3）、返回值
 
@@ -162,16 +275,13 @@
 
 交互过程中，服务端不断返回 text message （转写结果） 到客户端。当所有结果发送完毕后，服务端断开连接，交互结束。
 
-结果示例：
+* 结果示例：
 
 ```json
 {'action': 'result', 'code': '0', 'data': {'cn': {'st': {'bg': '7688', 'ed': '8691', 'type': '1', 'rt': [{'w': '俄罗斯方块儿。', 'translate': {'english': 'Russian squares.'}, 'ws': [{'wb': '7688', 'we': '7796', 'cw': [{'w': '俄', 'wp': 1}]}, {'wb': '7796', 'we': '7904', 'cw': [{'w': '罗', 'wp': 1}]}, {'wb': '8135', 'we': '8296', 'cw': [{'w': '斯', 'wp': 1}]}, {'wb': '8360', 'we': '8520', 'cw': [{'w': '方', 'wp': 1}]}, {'wb': '8583', 'we': '8691', 'cw': [{'w': '块', 'wp': 1}]}, {'wb': '8691', 'we': '8800', 'cw': [{'w': '儿', 'wp': 1}]}]}]}}, 'seg_id': 4}, 'desc': 'success', 'sid': 'a0a44031-ac75-4929-9773-2a6bd46450e7', 'asr': '俄罗斯方块儿。', 'translate': {'english': 'Russian squares.'}}
 ```
 
-
-
-
-转写结果字段说明如下：
+* 转写结果字段说明如下：
 
 | 字段      | 含义                                                         | 描述                                 |
 | :-------- | :----------------------------------------------------------- | :----------------------------------- |
@@ -349,7 +459,7 @@ IP白名单规则
 ```
 #### 实时语音转写支持什么平台？
 
-> 答：实时转写只支持webapi接口，开放平台“实时语音转写”需要WebSocket接入，针对是有编程基础的开发者用户。如果您是个人用户，不想通过编程方式直接实现语音转写功能，可以去笔声听见官网，了解语音转写功能的更多详情。
+> 答：实时转写只支持webapi接口，开放平台“实时语音转写”需要WebSocket接入，针对是有编程基础的开发者用户。如果您是个人用户，不想通过编程方式直接实现语音转写功能，可以去笔声官网，了解语音转写功能的更多详情。
 
 #### 实时语音转写支持什么语言？
 
