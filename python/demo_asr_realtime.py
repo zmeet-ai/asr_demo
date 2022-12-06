@@ -77,7 +77,8 @@ class Client():
 
                 if result_dict["action"] == "result":
                     result_1 = result_dict
-                    print(result_1["data"])
+                    #print(result_1["data"])
+                    print(result_1)
 
                 if result_dict["action"] == "error":
                     print("rtasr error: " + result)
@@ -108,7 +109,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./dataset/weiya2.wav')
+                        help='wave file path', default='./dataset/gametest.wav')
     args = parser.parse_args()
     logging.basicConfig()
 
