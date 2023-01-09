@@ -14,7 +14,7 @@ import sys
 import argparse
 import multiprocessing
 
-from auth.client_auth_service import get_signature_flytek, get_signature
+from auth.client_auth_service import get_signature, get_signature_flytek
 
 time_per_chunk = 0.1
 
@@ -24,7 +24,7 @@ class Client():
         base_url = "wss://{}/v1/asr/ws".format(args.url)
         ts = str(int(time.time()))
 
-        signa = get_signature_flytek(ts, app_id, app_secret)
+        signa = get_signature(ts, app_id, app_secret)
 
         url_asr_apply = base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa) + "&asr_type=2"
         print("url_asr_apply is: ", url_asr_apply)
@@ -105,17 +105,16 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="ASR Server test",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='translate.abcpen.com')
+                        help='server url', default='translate.yitutech.com')
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./dataset/yunxiao.wav')
+                        help='wave file path', default='./dataset/gametest.wav')
     args = parser.parse_args()
     logging.basicConfig()
 
     print("实时语音识别，使用wave包读取语音文件流")
 
-    ## 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
     app_id = "test1"
     app_secret = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
     if (len(app_id)<=0 or len(app_secret)<=0):

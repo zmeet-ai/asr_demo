@@ -15,8 +15,6 @@
 实时语音转写（Real-time ASR）基于深度全序列卷积神经网络框架，通过 WebSocket 协议，建立应用与语言转写核心引擎的长连接，开发者可实现将连续的音频流内容，实时识别返回对应的文字流内容。
 支持的音频格式： 采样率为16K，采样深度为16bit的pcm_s16le单声道音频
 
-实时语言转写基本兼容科大讯飞接口，同时做了大量简化。
-
 线上环境单个用户最大并发控制在20个以内，如果需要更大并发，请向商务申请。
 
 ## 2、接口Demo
@@ -30,10 +28,10 @@
 | 内容     | 说明                                                         |
 | :------- | ------------------------------------------------------------ |
 | 请求协议 | ws[s] (为提高安全性，强烈推荐wss)                            |
-| 请求地址 | ws[s]: //translate.abcpen.com/v1/asr/ws?{请求参数} *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
+| 请求地址 | ws[s]: //translate.yitutech.com/v1/asr/ws?{请求参数} *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
 | 接口鉴权 | 签名机制，详见 [signa生成](#signa生成)                       |
 | 响应格式 | 统一采用JSON格式                                             |
-| 开发语言 | 任意，只要可以向笔声云服务发起WebSocket请求的均可            |
+| 开发语言 | 任意，只要可以向依图云服务发起WebSocket请求的均可            |
 | 音频属性 | 采样率16k、位长16bit、单声道                                 |
 | 音频格式 | pcm                                                          |
 | 数据发送 | 建议音频流每200ms发送6400字节                                |
@@ -49,9 +47,9 @@
 接口地址
 
 ```text
-    ws://translate.abcpen.com/v1/asr/ws?{请求参数}
+    ws://translate.yitutech.com/v1/asr/ws?{请求参数}
     或
-    wss://translate.abcpen.com/v1/asr/ws?{请求参数}
+    wss://translate.yitutech.com/v1/asr/ws?{请求参数}
 ```
 
 参数格式
@@ -62,19 +60,19 @@
 
 参数说明
 
-| 参数              | 类型   | 必须 | 说明                                                         | 示例                                                        |
-| :---------------- | :----- | :--- | :----------------------------------------------------------- | :---------------------------------------------------------- |
-| appid             | string | 是   | 笔声开放平台应用ID                                           | 595f23df                                                    |
-| ts                | string | 是   | 当前时间戳，从1970年1月1日0点0分0秒开始到现在的秒数          | 1512041814                                                  |
-| signa             | string | 是   | 加密数字签名（基于HMACSHA1算法）                             | IrrzsJeOFk1NGfJHW6SkHUoN9CU=                                |
-| lang              | string | 否   | 实时语音转写语种，不传自动感知                               | 语种类型：中文、中英混合识别：cn；英文：en                  |
-| punc              | string | 否   | 标点过滤控制，默认返回标点，punc=0会过滤结果中的标点         | 1                                                           |
-| speaker_number    | string | 否   | 发音人个数，可选值：0-10，0表示盲分                          | 默认：2（适用通话时两个人对话的场景）                       |
-| trans_mode        | int    | 否   | 是否打开同声传译 ，<br/>1表示打开，0表示关闭                 | 1                                                           |
-| target_lang       | string | 否   | 目标翻译语种：控制把源语言转换成什么类型的语言；<br/>中文：cn<br/>英文：en<br/>日语：ja<br/>韩语：ko<br/>俄语：ru<br/>法语：fr<br/>西班牙语：es<br/>越南语：vi<br/> | trans_mode为1条件下，target_lang有效。 默认为英文“en"。     |
-| pd                | string | 否   | 垂直领域个性化参数: <br/>法院: court <br/>教育: edu <br/>金融: finance <br/>医疗: medical <br/>科技: tech <br/>运营商: isp <br/>政府: gov <br/>电商: ecom <br/>军事: mil <br/>企业: com <br/>生活: life <br/>汽车: car | 设置示例：pd="edu" 参数pd为非必须设置，不设置参数默认为通用 |
-| audio_sample_rate | string | 否   | 音频采样率，有"8000", "16000"，分别代表采样率是8K和16K，默认是“16000” | “16000”                                                     |
-| asr_type          | string | 否   | 识别结果输出类型，0，输出逐字和逐句结果；1，逐句输出；2，逐字输出。如输入错误或不输出，默认为0 | “0”                                                         |
+| 参数              | 类型   | 必须 | 说明                                                         | 示例                                                    |
+| :---------------- | :----- | :--- | :----------------------------------------------------------- | :------------------------------------------------------ |
+| appid             | string | 是   | 依图开放平台应用ID                                           | 595f23df                                                |
+| ts                | string | 是   | 当前时间戳，从1970年1月1日0点0分0秒开始到现在的秒数          | 1512041814                                              |
+| signa             | string | 是   | 加密数字签名（基于HMACSHA1算法）                             | IrrzsJeOFk1NGfJHW6SkHUoN9CU=                            |
+| lang              | string | 否   | 实时语音转写语种，不传自动感知                               | 语种类型：中文、中英混合识别：cn；英文：en              |
+| punc              | string | 否   | 标点过滤控制，默认返回标点，punc=0会过滤结果中的标点         | 1                                                       |
+| speaker_number    | string | 否   | 发音人个数，可选值：0-10，0表示盲分                          | 默认：2（适用通话时两个人对话的场景）                   |
+| trans_mode        | int    | 否   | 是否打开同声传译 ，<br/>1表示打开，0表示关闭                 | 0<br/> 默认同声传译引擎关闭                             |
+| trans_all         | int    | 否   | 是否打开全翻译开关，打开全翻译开关时，每个实时返回识别结果，都附带翻译结果 | 0<br/>默认关闭全翻译开关                                |
+| target_lang       | string | 否   | 目标翻译语种：控制把源语言转换成什么类型的语言；<br/>中文：cn<br/>英文：en<br/>日语：ja<br/>韩语：ko<br/>俄语：ru<br/>法语：fr<br/>西班牙语：es<br/>越南语：vi<br/> | trans_mode为1条件下，target_lang有效。 默认为英文“en"。 |
+| audio_sample_rate | string | 否   | 音频采样率，有"8000", "16000"，分别代表采样率是8K和16K，默认是“16000” | “16000”                                                 |
+| asr_type          | string | 否   | 识别结果输出类型，0，输出逐字和逐句结果；1，逐句输出；2，逐字输出。如输入错误或不输出，默认为0 | “0”                                                     |
 
 #### （2）、signa生成
 
@@ -86,135 +84,18 @@ import hmac
 import time
 import base64
 
-def get_signature_flytek(ts, app_id, app_secret):
-    tt = (app_id + ts).encode('utf-8')
-    md5 = hashlib.md5()
-    md5.update(tt)
-    baseString = md5.hexdigest()
-    baseString = bytes(baseString, encoding='utf-8')
-
-    apiKey = app_secret.encode('utf-8')
-    signa = hmac.new(apiKey, baseString, hashlib.sha1).digest()
-    signa = base64.b64encode(signa)
-    signa = str(signa, 'utf-8')
-    return signa
+def get_signature(timestamp, dev_id, dev_key):
+    ts = str(timestamp)
+    id_ts = str(dev_id) + ts
+    signature = hmac.new(str(dev_key).encode(), id_ts.encode(),
+                         digestmod=hashlib.sha256).hexdigest()
+    return signature
 ```
 
-##### b. Java示例
+* url网址实例
 
-* Java示例(具体参考github Java目录代码)
-
-```java
-    // 生成握手参数
-    public static String getHandShakeParams(String appId, String secretKey) {
-        String ts = System.currentTimeMillis() / 1000 + "";
-        String signa = "";
-        try {
-            signa = EncryptUtil.HmacSHA1Encrypt(EncryptUtil.MD5(appId + ts), secretKey);
-            return "?appid=" + appId + "&ts=" + ts + "&signa=" + URLEncoder.encode(signa, "UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
-```
-
-* Java基础工具类
-
-```java
-package com.abcpen.ai.rtasr.util;
-
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
-
-public class EncryptUtil {
-
-    /**
-     * 加密数字签名（基于HMACSHA1算法）
-     *
-     * @param encryptText
-     * @param encryptKey
-     * @return
-     * @throws SignatureException
-     */
-    public static String HmacSHA1Encrypt(String encryptText, String encryptKey) throws SignatureException {
-        byte[] rawHmac = null;
-        try {
-            byte[] data = encryptKey.getBytes(StandardCharsets.UTF_8);
-            SecretKeySpec secretKey = new SecretKeySpec(data, "HmacSHA1");
-            Mac mac = Mac.getInstance("HmacSHA1");
-            mac.init(secretKey);
-            byte[] text = encryptText.getBytes(StandardCharsets.UTF_8);
-            rawHmac = mac.doFinal(text);
-        } catch (InvalidKeyException e) {
-            throw new SignatureException("InvalidKeyException:" + e.getMessage());
-        } catch (NoSuchAlgorithmException e) {
-            throw new SignatureException("NoSuchAlgorithmException:" + e.getMessage());
-        }
-        String oauth = new String(Base64.encodeBase64(rawHmac));
-
-        return oauth;
-    }
-
-    public final static String MD5(String pstr) {
-        char[] md5String = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-        try {
-            byte[] btInput = pstr.getBytes();
-            MessageDigest mdInst = MessageDigest.getInstance("MD5");
-            mdInst.update(btInput);
-            byte[] md = mdInst.digest();
-            int j = md.length;
-            char[] str = new char[j * 2];
-            int k = 0;
-            for (int i = 0; i < j; i++) { // i = 0
-                byte byte0 = md[i]; // 95
-                str[k++] = md5String[byte0 >>> 4 & 0xf]; // 5
-                str[k++] = md5String[byte0 & 0xf]; // F
-            }
-
-            return new String(str);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-}
-```
-
-* 加密规则说明
-
-1.获取baseString，baseString由app_id和当前时间戳ts拼接而成，假如app_id为595f23df，ts为1512041814，则baseString为
-
-> 595f23df1512041814
-
-2.对baseString进行MD5，假如baseString为上一步生成的595f23df1512041814，MD5之后则为
-
-> 0829d4012497c14a30e7e72aeebe565e
-
-3.以app_secret为key对MD5之后的baseString进行HmacSHA1加密，然后再对加密后的字符串进行base64编码。
-假如app_secret为d9f4aa7ea6d94faca62cd88a28fd5234，MD5之后的baseString为上一步生成的0829d4012497c14a30e7e72aeebe565e，
-则加密之后再进行base64编码得到的signa为
-
-> IrrzsJeOFk1NGfJHW6SkHUoN9CU=
-
-备注：
-
-- app_secret：接口密钥，在应用中添加实时语音转写服务时自动生成，调用方注意保管；
-- signa的生成公式：HmacSHA1(MD5(app_id + ts), app_secret)，具体的生成方法参考本git实例代
-
-####请求示例
-
-```text
-	wss://translate.abcpen.com/v1/asr/ws?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
+```bash
+	wss://translate.yitutech.com/v1/asr/ws?appid=595f23df&ts=1512041814&signa=IrrzsJeOFk1NGfJHW6SkHUoN9CU=&pd=edu
 ```
 
 
@@ -305,7 +186,7 @@ public class EncryptUtil {
 在调用该业务接口时
 
 - 若关闭IP白名单，接口认为IP不限，不会校验IP。
-- 若打开IP白名单，则服务端会检查调用方IP是否在笔声开放平台配置的IP白名单中，对于没有配置到白名单中的IP发来的请求，服务端会拒绝服务。
+- 若打开IP白名单，则服务端会检查调用方IP是否在依图开放平台配置的IP白名单中，对于没有配置到白名单中的IP发来的请求，服务端会拒绝服务。
 
 IP白名单规则
 
@@ -459,7 +340,7 @@ IP白名单规则
 ```
 #### 实时语音转写支持什么平台？
 
-> 答：实时转写只支持webapi接口，开放平台“实时语音转写”需要WebSocket接入，针对是有编程基础的开发者用户。如果您是个人用户，不想通过编程方式直接实现语音转写功能，可以去笔声官网，了解语音转写功能的更多详情。
+> 答：实时转写只支持webapi接口，开放平台“实时语音转写”需要WebSocket接入，针对是有编程基础的开发者用户。如果您是个人用户，不想通过编程方式直接实现语音转写功能，可以去依图官网，了解语音转写功能的更多详情。
 
 #### 实时语音转写支持什么语言？
 
