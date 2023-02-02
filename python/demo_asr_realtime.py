@@ -23,7 +23,7 @@ class Client():
         ts = str(int(time.time()))
         self.wav_path = args.wave_path
 
-        signa = get_signature(ts, app_id, app_secret)
+        signa = get_signature_flytek(ts, app_id, app_secret)
 
         url_asr_apply = base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa) + "&asr_type=2"
         print("url_asr_apply is: ", url_asr_apply)
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="ASR Server test",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='translate.yitutech.com')
+                        help='server url', default='ai.abcpen.com')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
                         help='wave file path', default='./dataset/yunxiao.wav')
     args = parser.parse_args()

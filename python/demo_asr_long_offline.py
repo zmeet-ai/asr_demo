@@ -31,7 +31,7 @@ async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"
     }
 
     url = "https://{}/v1/asr/long".format(args.url)
-    print("The requst para is {}".format(query_post_apply))
+    print("\nThe requst para is {}".format(query_post_apply))
     response = requests.post(url, query_post_apply)
     print(response.text)
 
