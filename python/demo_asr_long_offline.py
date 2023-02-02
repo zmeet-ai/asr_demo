@@ -13,23 +13,12 @@ from progress.bar import Bar
 from urllib.parse import urlencode
 from auth.client_auth_service import get_signature_flytek
 
-async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
-    parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='ai.abcpen.com')
-    parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
-                        help='log file path', default='asr_res.log')
-    parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
-                        help='wave file path', default='./dataset/test_1.wav')
-    args = parser.parse_args()
+# 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
+app_id = "test1"
+app_secret = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
 
-    # 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
-    app_id = "test1"
-    app_secret = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
-    if (len(app_id) <= 0 or len(app_secret) <= 0):
-        print("Please apply appid and appsecret, demo will exit now")
-        sys.exit(1)
+async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"):
+
     timestamp = str(int(time.time()))
 
     signa = get_signature_flytek(timestamp, app_id, app_secret)
@@ -77,7 +66,6 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
             print("\r\nother error-code: {}, desc: {}".format(
                 response_json["code"], response_json["desc"]))
             return {"url": url_wave, "asr": response_json["desc"]}
-
     else:
         response_json = json.loads(response2.text)
 
@@ -86,10 +74,18 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
 
 async def main():
     try:
-        # 线上环境单个用户最大并发控制在20个以内，如果需要更大并发，请向商务申请。
-        #results = asyncio.gather(*[asr_offline("http://esdic.ectanger.com/dic/3-1.wav") for i in range(1)])
-        results = await asyncio.gather(asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3", audio_sample="48000"),
-                                       asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/b6a2c7ac-52c8-11ed-961e-00155dc6cbed.mp3", audio_sample="48000")
+        parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+        parser.add_argument('-u', '--url', type=str, metavar='URL',
+                            help='server url', default='ai.abcpen.com')
+        args = parser.parse_args()
+
+
+        if (len(app_id) <= 0 or len(app_secret) <= 0):
+            print("Please apply appid and appsecret, demo will exit now")
+            sys.exit(1)
+        results = await asyncio.gather(asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3", args, audio_sample="48000"),
+                                       asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/b6a2c7ac-52c8-11ed-961e-00155dc6cbed.mp3", args, audio_sample="48000")
                                        )
 
         print("\n\nWill output the final result in order!")
