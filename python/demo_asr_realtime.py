@@ -100,8 +100,6 @@ if __name__ == '__main__':
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-u', '--url', type=str, metavar='URL',
                         help='server url', default='translate.yitutech.com')
-    parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
-                        help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
                         help='wave file path', default='./dataset/yunxiao.wav')
     args = parser.parse_args()
