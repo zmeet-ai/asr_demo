@@ -14,8 +14,6 @@ from urllib.parse import urlencode
 from auth.client_auth_service import get_signature_flytek
 
 async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
-    global args
-
     parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-u', '--url', type=str, metavar='URL',
@@ -37,7 +35,7 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
     signa = get_signature_flytek(timestamp, app_id, app_secret)
     query_post_apply = {
         "ts": timestamp,
-        "appid": "test1",
+        "appid": app_id,
         "signa": signa,
         "audio_url": url_wave,
         "audio_encode": audio_encode,
@@ -47,7 +45,7 @@ async def asr_offline(url_wave, audio_encode="mpeg2", audio_sample="16000"):
     }
     query_post_result = {
         "ts": timestamp,
-        "appid": "test1",
+        "appid": app_id,
         "signa": signa
     }
     url = "https://{}/v1/asr/long".format(args.url)
@@ -110,4 +108,4 @@ if __name__ == "__main__":
         print("长语音离线识别演示, 演示异步提交请求服务时，返回识别结果依然有序; 该demo返回异步数组请求的json key value pair！")
         asyncio.run(main())
     except Exception as e:
-        logging.info("Got ctrl+c exception-2: %s, exit process", repr(e))
+        logging.info(f"Got ctrl+c exception-2: {repr(e)}, exit process")

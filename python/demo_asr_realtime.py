@@ -111,8 +111,8 @@ if __name__ == '__main__':
     print("实时语音识别，使用wave包读取语音文件流")
 
     ## 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
-    app_id = ""
-    app_secret = ""
+    app_id = "test1"
+    app_secret = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
     if (len(app_id)<=0 or len(app_secret)<=0):
         print("Please apply appid and appsecret, demo will exit now")
         sys.exit(1)
