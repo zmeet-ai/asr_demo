@@ -16,15 +16,15 @@ import multiprocessing
 
 from auth.client_auth_service import get_signature_flytek, get_signature
 
-time_per_chunk = 0.1
+time_per_chunk = 0.2
 
 class Client():
-    def __init__(self):
-        global args
+    def __init__(self, args):
         base_url = "wss://{}/v1/asr/ws".format(args.url)
         ts = str(int(time.time()))
+        self.wav_path = args.wave_path
 
-        signa = get_signature_flytek(ts, app_id, app_secret)
+        signa = get_signature(ts, app_id, app_secret)
 
         url_asr_apply = base_url + "?appid=" + app_id + "&ts=" + ts + "&signa=" + quote(signa) + "&asr_type=2"
         print("url_asr_apply is: ", url_asr_apply)
@@ -61,14 +61,12 @@ class Client():
         try:
             while self.ws.connected:
                 result = str(self.ws.recv())
-                #print(result)
                 if len(result) == 0:
                     print("receive result empty")
                     self.close()
                     break
 
                 result_dict = json.loads(result)
-                #print(result_dict)
                 if ("action" not in result_dict):
                     continue
                 # 解析结果
@@ -93,19 +91,16 @@ class Client():
         self.ws.close()
         print("connection closed")
 
-def zmq_daemon():
-    global args
-    client = Client()
+def zmq_daemon(args):
+
+    client = Client(args)
     client.send(args.wave_path)
 
 if __name__ == '__main__':
-
-    global args
-
     parser = argparse.ArgumentParser(description="ASR Server test",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-u', '--url', type=str, metavar='URL',
-                        help='server url', default='translate.abcpen.com')
+                        help='server url', default='translate.yitutech.com')
     parser.add_argument('-l', '--log_path', type=str, metavar='LOG',
                         help='log file path', default='asr_res.log')
     parser.add_argument('-f', '--wave_path', type=str, metavar='WAVE',
@@ -116,8 +111,8 @@ if __name__ == '__main__':
     print("实时语音识别，使用wave包读取语音文件流")
 
     ## 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
-    app_id = "test1"
-    app_secret = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
+    app_id = ""
+    app_secret = ""
     if (len(app_id)<=0 or len(app_secret)<=0):
         print("Please apply appid and appsecret, demo will exit now")
         sys.exit(1)
@@ -125,6 +120,6 @@ if __name__ == '__main__':
     #for i in range(5):
         #client = Client()
         #client.send(args.wave_path)
-    mp = multiprocessing.Process(target=zmq_daemon)
+    mp = multiprocessing.Process(target=zmq_daemon, args=(args,))
     #mp.daemon = True
     mp.start()
