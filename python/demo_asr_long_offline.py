@@ -43,15 +43,15 @@ async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"
     }
     query_post_task["task_id"] = response_json["data"]["task_id"]
 
-    response2 = requests.get(url, query_post_task)
-    response_json = json.loads(response2.text)
+    query_post_result = requests.get(url, query_post_task)
+    response_json = json.loads(query_post_result.text)
     bar = Bar('Processing', max=100)
     flag = response_json["code"]
     while (flag != '0'):
         bar.next()
         await asyncio.sleep(3)
-        response2 = requests.get(url, query_post_task)
-        response_json = json.loads(response2.text)
+        query_post_result = requests.get(url, query_post_task)
+        response_json = json.loads(query_post_result.text)
 
         flag = response_json["code"]
         if (flag == '-1'):
@@ -65,7 +65,7 @@ async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"
                 response_json["code"], response_json["desc"]))
             return {"url": url_wave, "asr": response_json["desc"]}
     else:
-        response_json = json.loads(response2.text)
+        response_json = json.loads(query_post_result.text)
 
         return {"url": url_wave, "asr": response_json}
 
