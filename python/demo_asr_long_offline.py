@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import requests
@@ -6,11 +5,9 @@ import asyncio
 import sys
 import json
 import logging
-import os
 import time
 import argparse
 from progress.bar import Bar
-from urllib.parse import urlencode
 from auth.client_auth_service import get_signature_flytek
 
 # 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
@@ -32,27 +29,28 @@ async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"
         "has_participle": "false"
 
     }
-    query_post_result = {
-        "ts": timestamp,
-        "appid": app_id,
-        "signa": signa
-    }
+
     url = "https://{}/v1/asr/long".format(args.url)
     print("The requst para is {}".format(query_post_apply))
     response = requests.post(url, query_post_apply)
     print(response.text)
 
     response_json = json.loads(response.text)
-    query_post_result["task_id"] = response_json["data"]["task_id"]
+    query_post_task = {
+        "ts": timestamp,
+        "appid": app_id,
+        "signa": signa
+    }
+    query_post_task["task_id"] = response_json["data"]["task_id"]
 
-    response2 = requests.get(url, query_post_result)
+    response2 = requests.get(url, query_post_task)
     response_json = json.loads(response2.text)
     bar = Bar('Processing', max=100)
     flag = response_json["code"]
     while (flag != '0'):
         bar.next()
         await asyncio.sleep(3)
-        response2 = requests.get(url, query_post_result)
+        response2 = requests.get(url, query_post_task)
         response_json = json.loads(response2.text)
 
         flag = response_json["code"]
