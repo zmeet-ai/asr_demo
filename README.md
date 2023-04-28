@@ -300,6 +300,18 @@ public class EncryptUtil {
 
 交互过程中，在服务端出现异常而中断服务时（如会话超时），会将异常信息以 text message 形式返回给客户端并关闭连接。
 
+#### （9）、 实时变更指令，实现语言的切换，或者场景的切换
+
+变更源语言和目标语言, 和变更场景，统一使用下述指令，实时发送到现有的已有的websocket链接上（和语音数据的二进制数据不同）
+
+{"config": { "lang": {"source_lang": "zh", "target_lang": "en"}}, "scene": "law"}
+
+* lang字典表示源语言和目标语言切换（有lang字典的时候，source_lang和target_lang必须同时存在），scene表示场景切换； 
+* lang和scene两者或的存在，也就是：
+  * 有lang，无scene
+  * 无lang，有scene
+  * 有lang，有scene
+
 ## 5、白名单
 
 在调用该业务接口时
