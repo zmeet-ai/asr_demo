@@ -264,11 +264,11 @@ export default {
 ####  /v1/translate/sentence
 * 常规参数，属于鉴权信息，生成X-App-Key， X-App-Signature和X-Timestamp这三个参数
 * 具体参数定义
-   | 参数        | 类型   | 是否必须 | 默认值 | 备注                                                         |
-   | ----------- | ------ | -------- | ------ | ------------------------------------------------------------ |
-   | sentence    | string | 是       | 无     | 待翻译语句, 单次文本长度不得超过2048字节（如超过则被笔声引擎自动截断）。 |
-   | source_lang | string | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文                   |
-   | target_lang | string | 是       | 无     | 目标语言，如德文                                             |
+   | 参数        | 类型                       | 是否必须 | 默认值 | 备注                                                         |
+   | ----------- | -------------------------- | -------- | ------ | ------------------------------------------------------------ |
+   | sentences   | string array 或string list | 是       | 无     | 待翻译语句, 单次文本长度不得超过2048字节（如超过则被笔声引擎自动截断）;示例：sentences = ["Hello"], 是json的只包含一个条目的列表数据结构体 |
+   | source_lang | string                     | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文                   |
+   | target_lang | string                     | 是       | 无     | 目标语言，如德文                                             |
 
    * 翻译单条语句{sentence}，从源语言{source_lang}到目标语言{target_lang}。
 
@@ -282,17 +282,25 @@ export default {
    | msg              | string | 状态码对应字符串，如"success"            |
    | translation_time | Int    | 翻译消耗时长                             |
 
+* 返回实例
+
+  ```json
+  {"code":"0","msg":"success","translation_time":4.30884313583374,"result":{"src":"\"\n    首先，ASML作为全球最大的光刻机制造厂商，尽管能够领跑全世界，可如果没有大批金主客户，ASML也不会过得那么舒坦。中国市场作为全球最大的消费市场，\n在近年来，国内的半导体企业数量飙升，全球每新增20家半导体企业，就有19家是中国的，可见中国市场的巨大潜力。ASML也不傻，虽然在之 前一直未大量出口给中\n国光刻机，但是随着中国对DUV光刻机需求的增长，ASML也开始重视起中国市场了。\n    ","target":"\"\n    First, ASML, as the world's largest light maker, although able to lead the world, would not have been as comfortable without a large number of gold owners.The Chinese market is the largest consumer market in the world.\nIn recent years, the number of domestic semiconductor enterprises has soared that, for every 20 additional semiconductor enterprises in the world, 19 are Chinese, and the huge potential of the Chinese market can be seen.ASML wasn't stupid, though it hadn't been exported to China in the past.\nThe Chinese market has also begun to receive attention from ASML as China's demand for DUV has grown.\n    "}}
+  ```
+
+  
 
 ### （2）翻译多条语句
+
 ####  /v1/translate/sentences
 * 常规参数，属于鉴权信息，生成X-App-Key， X-App-Signature和X-Timestamp这三个参数
 
 * 具体参数定义
-   | 参数        | 类型   | 是否必须 | 默认值 | 备注                                                         |
-   | ----------- | ------ | -------- | ------ | ------------------------------------------------------------ |
-   | sentences   | string | 是       | 无     | 多条待翻译的语句, 每条语句最长不得超过2048字节（如超过则被笔声引擎自动截断）；示例：sentences = ["Hello", "World"], 是json的一个列表数据结构体 |
-   | source_lang | string | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文                   |
-   | target_lang | string | 是       | 无     | 目标语言，如德文                                             |
+   | 参数        | 类型                       | 是否必须 | 默认值 | 备注                                                         |
+   | ----------- | -------------------------- | -------- | ------ | ------------------------------------------------------------ |
+   | sentences   | string array 或string list | 是       | 无     | 多条待翻译的语句, 每条语句最长不得超过2048字节（如超过则被笔声引擎自动截断）；示例：sentences = ["Hello", "World"], 是json的一个列表数据结构体 |
+   | source_lang | string                     | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文                   |
+   | target_lang | string                     | 是       | 无     | 目标语言，如德文                                             |
 	* **所有参数按照：application/json POST方式提交到云端**。
 	* 翻译多条语句{sentences}，从源语言{source_lang}到目标语言{target_lang}。
 * 返回参数定义
@@ -305,7 +313,7 @@ export default {
    | msg              | string |状态码对应字符串，如"success"|
    | translation_time | Int    |翻译消耗时长|
 
-* 返回实例：下面输入三句中文列表，返回三句对应的英文
+* 输入输出实例，下面输入三句中文列表，返回三句对应的英文
 
   * 输入json数据
 
@@ -352,6 +360,15 @@ export default {
    | msg              | string |状态码对应字符串，如"success"|
    | translation_time | Int    |翻译消耗时长|
 
+* 返回实例
+
+  ```json
+   {"code":"0","msg":"success","translation_time":1.3310611248016357,"result":{"src":"随着全球国家科技实力的提升，如今的世界，已经不是美国一家独大的情景
+  了。\n就在前两年，华为的崛起让所有国家都大吃了一惊，尤其是美国。万万没想到，在移动通信领域中，超越美国的不是发达国家，而是我们中国。\n显然，美国已经不想再眼睁睁看着华为崛起，所以便定下了芯片规则。随着芯片规则 的升级，就连ASML公司也受到了影响，然而为了能够给中国出口DUV光刻机，\nASML甚至不惜硬刚美国规则，不少美国媒体都表示，这是ASML翅膀硬了。\n\n\n我们都知道，ASML是全球乃至世界上唯一一个拥有EUV光刻机成熟供应链的公司 ，在全球范围内都拥有极高的地位。要知道，台积电之所以能够跨越美国企业，\n成为全球第一大芯片代工厂，就是因为台积电获得了ASML的青睐，拿到了80台EUV光刻机。一直以来，ASML公司都非常信任美国，从来不将EUV光刻机出口给\n中国大陆企业。可是在最近，ASML似乎将局势看的异常清楚，那么到底是什么原因？让ASML不惜硬刚美国规则，也要出口DUV光刻机给中国呢？\n\n\n首先，ASML作为全球最大的光刻机制造厂商，尽管能够领跑全世界，可如果没有大批金 主客户，ASML也不会过得那么舒坦。中国市场作为全球最大的消费市场，\n在近年来，国内的半导体企业数量飙升，全球每新增20家半导体企业，就有19家是中国的，可见中国市场的巨大潜力。ASML也不傻，虽然在之前一直未大量出口给 中\n国光刻机，但是随着中国对DUV光刻机需求的增长，ASML也开始重视起中国市场了。\n\n\n其次就是ASML发现，随着美国规则的建立，全球芯片格局出现了重大变动，比如高端芯片的需求大大降低，导致各大企业对EUV光刻机的需求也 随之下降。要知道，\nASML的营收主要来源就是在EUV光刻机的出口，那么在这样的情况下，ASML的营收出现了巨大下降。这一度让ASML十分无奈，不过值得安慰的是，中国市场开始大量\n进口DUV光刻机，弥补了ASML公司的亏损。\n\n\nASML公司也非常清楚，导致这一切的最根本的原因，就是在于美国修改了芯片规则。所以，当美国再次对ASML下达DUV出口禁令时，ASML当然不可能心甘情愿了。\n毕竟，中国市场对于ASML来说，就像是宝藏。而且中国在对待ASML时十分尊 重，让ASML感受到了友好的气息，这一点在美国身上是从未感受过的。所以，\nASML不仅在DUV光刻机出口上，对中国市场做出了极大的倾斜，也开始加大投资在中国的研究中心。\n\n\n\n","target":"As the global power of science and technology has grown, the world today is no longer the only one in the United States.\nJust the previous two years, the rise of China had shocked all countries, particularly the United States.It is not surprising that, in the field of mobile communications, it is not the developed countries, but we, China, that are going beyond the United States.\nClearly, the United States no longer wants to see China rise in order to set the chip rule.Even ASML has been affected by the upgrade of chip rules, but in order to be able to export DUV luminators to China,\nASML is even hard on American rules, and many American media say it's hard on the ASML wings.\n\n\nAs we all know, ASML is the only company in the world, and globally, with an EUV luminous and mature supply chain, and is extremely well placed.You know, the power that's going to cut across American businesses.\nIt was the world's largest chip-for-work plant, which was won by ASML and 80 EUV light-engineers.ASML has always trusted the U.S. and never exported the EUV light carving machine to the U.S.\nBusinesses in mainland China.But lately, ASML seems to see the situation in an extraordinary way, so what's the reason why ASML has to export the DUV to China, despite the American rules?\n\n\nFirst, ASML, as the world's largest light maker, although able to lead the world, would not have been as comfortable without a large number of gold owners.The Chinese market is the largest consumer market in the world.\nIn recent years, the number of domestic semiconductor enterprises has soared that, for every 20 additional semiconductor enterprises in the world, 19 are Chinese, and the huge potential of the Chinese market can be seen.ASML wasn't stupid, though it hadn't been exported to China in the past.\nThe Chinese market has also begun to receive attention from ASML as China's demand for DUV has grown.\n\n\nSecond, ASML found that, with the establishment of United States rules, there had been significant changes in global chip patterns, such as a significant reduction in the demand for high-end chips, which had led to a decline in the demand for EUV light-engineers by major enterprises.You know,\nThe main source of ASML revenue was exports from EUV light-engineers, which led to a dramatic decline in ASML revenue.ASML has been overwhelmed by this, but it's comforting that the Chinese market is beginning to see a lot of it.\nThe import of the DUV light engraved machines made up for the losses incurred by ASML.\n\n\nASML is also well aware that the most fundamental reason for this is that the United States has modified the chip rule.So, when the United States again imposed a DMV export ban on ASML, it was certainly impossible for ASML to be willing to do so.\nAfter all, the Chinese market is like a treasure to ASML.And China treated ASML with great respect and made it feel friendly, which it had never felt in the United States.So, what's going on?\nASML has not only made a huge tilt on the Chinese market on the export of DUV light-engine, but has also begun to invest more in research centres in China.\n\n\n\n"}}
+  ```
+
+  
+
 ### （4）语言检测
 
 ####  /v1/translate/language_detection
@@ -375,6 +392,20 @@ export default {
   | msg              | string |状态码对应字符串，如"success"|
   | translation_time | Int    |翻译消耗时长|
 
+* 返回实例
+
+  ```json
+  {"code":"0","msg":"success","result":["de","en","zh"]}
+  ```
+
+  返回单条结果
+
+  ```json
+  {'code': '0', 'msg': 'success', 'result': 'de'}
+  ```
+
+  
+
 ###    (5)、获得语言两字符编码
 
 ####  /v1/translate/lang_pair
@@ -396,13 +427,10 @@ export default {
   | code             | string |状态码, 如“0”， 具体参考[错误码]|
   | msg              | string |状态码对应字符串，如"success"|
   
-   
   
-    
+  
 
-<a name = "语言编码" ></a>
-
-## 4、语言编码
+## 4、<a name = "语言编码" >语言编码</a>
 
 ### （1）、目前支持100种国家语，这里暂时列出部分国家语言编码。
 
