@@ -264,11 +264,11 @@ export default {
 ####  /v1/translate/sentence
 * 常规参数，属于鉴权信息，生成X-App-Key， X-App-Signature和X-Timestamp这三个参数
 * 具体参数定义
-   | 参数        | 类型   | 是否必须 | 默认值 | 备注                                       |
-   | ----------- | ------ | -------- | ------ | ------------------------------------------ |
-   | sentence    | string | 是       | 无     | 待翻译语句                                 |
-   | source_lang | string | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文 |
-   | target_lang | string | 是       | 无     | 目标语言，如德文                           |
+   | 参数        | 类型   | 是否必须 | 默认值 | 备注                                                         |
+   | ----------- | ------ | -------- | ------ | ------------------------------------------------------------ |
+   | sentence    | string | 是       | 无     | 待翻译语句, 单次文本长度不得超过2048字节（如超过则被笔声引擎自动截断）。 |
+   | source_lang | string | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文                   |
+   | target_lang | string | 是       | 无     | 目标语言，如德文                                             |
 
    * 翻译单条语句{sentence}，从源语言{source_lang}到目标语言{target_lang}。
 
@@ -288,11 +288,12 @@ export default {
 * 常规参数，属于鉴权信息，生成X-App-Key， X-App-Signature和X-Timestamp这三个参数
 
 * 具体参数定义
-   | 参数        | 类型   | 是否必须 | 默认值 | 备注                                       |
-   | ----------- | ------ | -------- | ------ | ------------------------------------------ |
-   | sentences   | string | 是       | 无     | 多条待翻译的语句                           |
-   | source_lang | string | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文 |
-   | target_lang | string | 是       | 无     | 目标语言，如德文                           |
+   | 参数        | 类型   | 是否必须 | 默认值 | 备注                                                         |
+   | ----------- | ------ | -------- | ------ | ------------------------------------------------------------ |
+   | sentences   | string | 是       | 无     | 多条待翻译的语句, 每条语句最长不得超过2048字节（如超过则被笔声引擎自动截断）；示例：sentences = ["Hello", "World"], 是json的一个列表数据结构体 |
+   | source_lang | string | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文                   |
+   | target_lang | string | 是       | 无     | 目标语言，如德文                                             |
+	* **所有参数按照：application/json POST方式提交到云端**。
 	* 翻译多条语句{sentences}，从源语言{source_lang}到目标语言{target_lang}。
 * 返回参数定义
 
@@ -304,7 +305,24 @@ export default {
    | msg              | string |状态码对应字符串，如"success"|
    | translation_time | Int    |翻译消耗时长|
 
+* 返回实例：下面输入三句中文列表，返回三句对应的英文
 
+  * 输入json数据
+
+    ```json
+    {'sentences': ['顶着国际形势的压力，美国多次发出禁止华为使用美国制造的芯片的政策。即使是技术领先的高通公司，\n也经历了被迫退出与华为的合作之后，却在最近的消息中，高通却力挺华为，继续为其供应芯片。这一系列的变化，\n引发了广泛的热议，这是哪一方面的利益在占据上风，华为这一巨头的生存之路到底会是如何演绎的呢？', '首先，我们需要明确“洋可乐”在市场上成功的原因。一方面，这款饮料的包装与口感极之相似，很难被察觉 ，\n 消费者不知不觉中就购买了这款“假冒”饮料。另一方面，“洋可乐”制作成本低，清一色使用了国内生产的原材料，这也是它能够以低廉价格出售的重要原因。', '4月27日至28日，第六届数字中国建设峰会在福州举行。党的十八大以 来，习近平总书记高度重视大数据产业发展，\n\n对发展数字经济、建设数字中国，作出一系列重大决策、重要部署，提出一系列新思想新观点新论断。今天，一起来学习！'], 'source_lang': 'zh', 'target_lang': 'en'}
+    ```
+
+    
+
+  * 返回json数据
+
+  ```json
+  
+  {"code":"0","msg":"success","translation_time":0.6612496376037598,"result":{"src":["顶着国际形势的压力，美国多次发出禁止华为使用美国制造的芯片的政策。即使是技术领先的高通公司，\n也经历了被迫退出与华为的合作之后，却在最近的消息中，高通却力挺华为，继续为其供应芯片。这一系列的变化，\n引发了广泛的热议，这是哪一方面的利益在占据上风，华为这一巨头的生存之路 到底会是如何演绎的呢？","首先，我们需要明确“洋可乐”在市场上成功的原因。一方面，这款饮料的包装与口感极之相似，很难被察觉，\n 消费者不知不觉中就购买了这款“假冒”饮料。另一方面，“洋可乐”制作成本低，清一色使用了国 内生产的原材料，这也是它能够以低廉价格出售的重要原因。","4月27日至28日，第六届数字中国建设峰会在福州举行。党的十八大以来，习近平总书记高度重视大数据产业发展，\n\n对发展数字经济、建设数字中国，作出一系列重大决 策、重要部署，提出一系列新思想新观点新论断。今天，一起来学习！"],"target":["In response to international pressure, the United States has repeatedly issued a policy of prohibiting the use of United States-made chips.Even high-tech high-tech companies,\nAfter having been forced to withdraw from cooperation with China, the most recent news has been that high-intensity forces continue to supply them with chips.This series of changes,\nThere was widespread debate as to which interests prevailed and how the path to the survival of this giant would be shaped.","First of all, we need to identify the reasons why “sea Cola” has succeeded in the market.On the one hand, the packaging of this drink is very similar to the taste and is difficult to detect,\n The consumer bought the “fake” drink unwittingly.On the other hand, the low cost of “ocean Coke” production and the use of domestically produced raw materials in a single colour are important reasons why it can be sold at a low price.","The Sixth Digital China Building Summit was held in Fuzhou from 27 to 28 April.Since the Party's eighteenth birthday, Xi Jinping General Secretary has given high priority to the development of the big data industry.\n\nTo develop the digital economy and build a digital China, a series of important decisions and deployments have been made, and a series of new ideas have been proposed.Today, let's learn together!"]}}
+  ```
+
+  
 
 
 ### （3）翻译文件
@@ -315,11 +333,11 @@ export default {
 
 * 具体参数定义
 
-  | 参数        | 类型   | 是否必须 | 默认值 | 备注                                       |
-  | ----------- | ------ | -------- | ------ | ------------------------------------------ |
-  | document    | File   | 是       | 无     | 上传的待识别的文件                         |
-  | source_lang | string | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文 |
-  | target_lang | string | 是       | 无     | 目标语言，如德文                           |
+  | 参数        | 类型   | 是否必须 | 默认值 | 备注                                                         |
+  | ----------- | ------ | -------- | ------ | ------------------------------------------------------------ |
+  | document    | File   | 是       | 无     | 上传的待识别的文件，单次文本长度不得超过4096字节（如超过则被笔声引擎自动截断） |
+  | source_lang | string | 否       | ""     | 为空字符串，引擎自动探测；源语言，比如中文                   |
+  | target_lang | string | 是       | 无     | 目标语言，如德文                                             |
   
   
   * 翻译文件{document}，从源语言{source_lang}到目标语言{target_lang}。
