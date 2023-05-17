@@ -318,7 +318,7 @@ export default {
 
   | 参数   | 类型   | 备注                 |
   | ------ | ------ | -------------------- |
-  | data | string | 子参数有：1. task_id, 客户输入的任务id， 2. input_audio_url, 客户输入的原始噪声url， 3. clean_audio_url, AI引擎处理的降噪后的干净的语音url。 |
+  | data | string | 子参数有：1. task_id, 客户输入的任务id， 2. input_audio_url, 客户输入的原始噪声url， 3. clean_audio_url, AI引擎处理的降噪后的干净的语音url; 其中status具体定义如下：<br/>status = 1, 处理完毕. <br/>status = 2, 正在处理中； <br/>status = 3, 处理失败 |
   | code             | string |状态码, 如“0”， 具体参考[错误码]|
   | msg              | string |状态码对应字符串，如"success"|
 

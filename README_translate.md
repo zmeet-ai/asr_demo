@@ -26,6 +26,8 @@
 
 # 三、API文档
 
+默认情况下，客户端和服务端之间会保持长链接，默认时长是5分钟（30秒），请开发者使用开发包开发的时候注意，比如在发送的header部位加上Connection: keep-alive这个key/value属性。
+
 ## 1、接口说明
 
 - 集成同声传译时，需按照以下要求:
@@ -432,32 +434,114 @@ export default {
 
 ## 4、<a name = "语言编码" >语言编码</a>
 
-### （1）、目前支持100种国家语，这里暂时列出部分国家语言编码。
+### （1）、目前支持100种国家语
+
+完整的清单如下：
+
+|               |             |              |
+| ------------- | ----------- | ------------ |
+| Language Code | Language    | Translation  |
+| en            | english     | 英语         |
+| zh            | chinese     | 中文         |
+| de            | german      | 德语         |
+| es            | spanish     | 西班牙语     |
+| ru            | russian     | 俄语         |
+| ko            | korean      | 韩语         |
+| fr            | french      | 法语         |
+| ja            | japanese    | 日语         |
+| pt            | portuguese  | 葡萄牙语     |
+| tr            | turkish     | 土耳其语     |
+| pl            | polish      | 波兰语       |
+| ca            | catalan     | 加泰罗尼亚语 |
+| nl            | dutch       | 荷兰语       |
+| ar            | arabic      | 阿拉伯语     |
+| sv            | swedish     | 瑞典语       |
+| it            | italian     | 意大利语     |
+| id            | indonesian  | 印尼语       |
+| hi            | hindi       | 印地语       |
+| fi            | finnish     | 芬兰语       |
+| vi            | vietnamese  | 越南语       |
+| iw            | hebrew      | 希伯来语     |
+| uk            | ukrainian   | 乌克兰语     |
+| el            | greek       | 希腊语       |
+| ms            | malay       | 马来语       |
+| cs            | czech       | 捷克语       |
+| ro            | romanian    | 罗马尼亚语   |
+| da            | danish      | 丹麦语       |
+| hu            | hungarian   | 匈牙利语     |
+| ta            | tamil       | 泰米尔语     |
+| no            | norwegian   | 挪威语       |
+| th            | thai        | 泰语         |
+| ur            | urdu        | 乌尔都语     |
+| hr            | croatian    | 克罗地亚语   |
+| bg            | bulgarian   | 保加利亚语   |
+| lt            | lithuanian  | 立陶宛语     |
+| la            | latin       | 拉丁语       |
+| mi            | maori       | 毛利语       |
+| ml            | malayalam   | 马拉雅拉姆语 |
+| cy            | welsh       | 威尔士语     |
+| sk            | slovak      | 斯洛伐克语   |
+| te            | telugu      | 泰卢固语     |
+| fa            | persian     | 波斯语       |
+| lv            | latvian     | 拉脱维亚语   |
+| bn            | bengali     | 孟加拉语     |
+| sr            | serbian     | 塞尔维亚语   |
+| az            | azerbaijani | 阿塞拜疆语   |
+| sl            | slovenian   | 斯洛文尼亚语 |
+| kn            | kannada     | 卡纳达语     |
+| et            | estonian    | 爱沙尼亚语   |
+| mk   | macedonian     | 马其顿语       |
+| br   | breton         | 布列塔尼语     |
+| eu   | basque         | 巴斯克语       |
+| is   | icelandic      | 冰岛语         |
+| hy   | armenian       | 亚美尼亚语     |
+| ne   | nepali         | 尼泊尔语       |
+| mn   | mongolian      | 蒙古语         |
+| bs   | bosnian        | 波斯尼亚语     |
+| kk   | kazakh         | 哈萨克语       |
+| sq   | albanian       | 阿尔巴尼亚语   |
+| sw   | swahili        | 斯瓦希里语     |
+| gl   | galician       | 加利西亚语     |
+| mr   | marathi        | 马拉地语       |
+| pa   | punjabi        | 旁遮普语       |
+| si   | sinhala        | 僧伽罗语       |
+| km   | khmer          | 高棉语         |
+| sn   | shona          | 修纳语         |
+| yo   | yoruba         | 约鲁巴语       |
+| so   | somali         | 索马里语       |
+| af   | afrikaans      | 南非荷兰语     |
+| oc   | occitan        | 奥克语         |
+| ka   | georgian       | 格鲁吉亚语     |
+| be   | belarusian     | 白俄罗斯语     |
+| tg   | tajik          | 塔吉克语       |
+| sd   | sindhi         | 信德语         |
+| gu   | gujarati       | 古吉拉特语     |
+| am   | amharic        | 阿姆哈拉语     |
+| yi   | yiddish        | 意第绪语       |
+| lo   | lao            | 老挝语         |
+| uz   | uzbek          | 乌兹别克语     |
+| fo   | faroese        | 法罗语         |
+| ht   | haitian creole | 海地克里奥尔语 |
+| ps   | pashto         | 普什图语       |
+| tk   | turkmen        | 土库曼语       |
+| nn   | nynorsk        | 新挪威语       |
+| mt   | maltese        | 马耳他语       |
+| sa   | sanskrit       | 梵语           |
+| lb   | luxembourgish  | 卢森堡语       |
+| my   | myanmar        | 缅甸语         |
+| bo   | tibetan        | 藏语           |
+| tl   | tagalog        | 塔加洛语       |
+| mg   | malagasy       | 马达加斯加语   |
+| as   | assamese       | 阿萨姆语       |
+| tt   | tatar          | 鞑靼语         |
+| haw  | hawaiian       | 夏威夷语       |
+| ln   | lingala        | 林加拉语       |
+| ha   | hausa          | 豪萨语         |
+| ba   | bashkir        | 巴什基尔语     |
+| jw   | javanese       | 爪哇语         |
+| su   | sundanese      | 巽他语         |
 
 
-| 国家（语言）       | 编码（简称） | 备注 |
-| ------------------ | ------------ | ---- |
-| 中国               | zh           |      |
-| 德国               | de           |      |
-| 英文（美国，英国） | en           |      |
-| 俄罗斯             | ru           |      |
-| 日语               | ja           |      |
-| 法语               | fr           |      |
-| 意大利             | it           |      |
-| 保加利亚           | bg           |      |
-| 越南               | vi           |      |
-| 乌克兰             | uk           |      |
-| 芬兰               | fi           |      |
-| 希伯来语言         | he           |      |
-| 马来语（Malay）    | ms           |      |
-| 荷兰语             | nl           |      |
-| 西班牙语           | es           |      |
-
-### （2）、具体支持如下国家的语言
-
-```json
-'Dimili', 'Tuvalu', 'newari classique', 'maori', 'Lule Sami', 'basque', 'tigré', 'mandar', 'grec moderne (après 1453)', 'tereno', 'lezghien', 'massaï', 'sicilien', 'Maori', 'gaélique', 'lunda', 'Palauan', 'Vietnamese', 'navaho', 'ga', 'sango', 'marathe', 'Armenian', 'interlingua (langue auxiliaire internationale)', 'Czech', 'selkoupe', 'kutenai', 'quechua', 'Sepedi', 'australiennes, langues', 'Bliss', 'Cook Islands Maori', 'Guarani', 'Yiddish', 'Classical Nepal Bhasa', 'dogri', 'Iloko', "slavon d'église", 'Azerbaijani', 'Nyanja', 'Creek', "grec ancien (jusqu'à 1453)", 'népalais', 'mongol', 'gbaya', 'dimli', 'Gondi', "N'Ko", 'Icelandic', 'cheyenne', 'aymara', 'Acoli', 'Kamba', 'Norwegian Bokmål', 'Norwegian Bokmaal', 'norwegian bokmål', 'norwegian bokmaal', 'Oirat', 'Kongo', 'bachkir', 'koumyk', 'finno-ougriennes,langues', 'élamite', 'Alemannic', 'Tigrinya', 'kirmanjki', 'Chipewyan', 'Afro-Asiatic languages', 'Ido', 'yapois', 'Selkup', 'hébreu', 'Kanuri', 'haida', 'sioux, langues', 'yao', 'Occitan (post 1500)', 'Efik', 'Provençal, Old (to 1500)', 'Marwari', 'néerlandais', 'Ossetian', 'turc ottoman (1500-1928)', 'occitan (après 1500)', 'Lingala', 'Pali', 'kalmouk', 'Hungarian', 'cornique', 'Scots', 'kachoube', 'Sorbian languages', 'norrois, vieux', 'suédois', 'Ewondo', 'inupiaq', 'Church Slavic', 'tibétain', 'Austronesian languages', 'Ndebele, North', 'luxembourgeois', 'Zaza', 'alsacien', 'roumain', 'Norwegian', 'Nzima', 'frison septentrional', 'shona', 'asturoléonais', 'blackfoot', 'napolitain', 'mapuche', 'interlingue', 'banda, langues', 'nigéro-kordofaniennes, langues', 'frison oriental', 'Baltic languages', 'Mandar', 'touva', 'Interlingue', 'Sichuan Yi', 'galicien', 'sarde', 'edo', 'mongo', 'Kosraean', 'Crimean Tatar', 'Asturian', 'kazakh', 'Chichewa', 'Kapampangan', 'Coptic', 'Sinhala', 'Kwanyama', 'Iroquoian languages', 'Quechua', 'Bemba', 'allemand, moyen haut (ca. 1050-1500)', 'Asturleonese', 'French', 'Tigre', 'Galibi Carib', 'Sardinian', 'Grebo', 'zenaga', 'chamorro', 'manipuri', 'kabardien', 'pedi', 'sami du Nord', 'kirghiz', "amérindiennes de l'Amérique centrale, langues", 'Igbo', 'Salishan languages', 'cherokee', 'umbundu', 'Indic languages', 'Creoles and pidgins', 'Classical Newari', 'Nepal Bhasa', 'Siouan languages', 'turkmène', 'soninké', 'Mandingo', 'Latin', 'créole haïtien', 'Luba-Lulua', 'Swedish', 'serbe', 'bas allemand', 'chinese_simplified', 'chinese_traditional', 'Tamashek', 'Upper Sorbian', 'Indonesian', 'sotho du Nord', 'iroquoises, langues', 'Edo', 'Cherokee', 'Ekajuk', 'Bislama', 'kwanyama', 'gothique', 'Pashto', 'Sicilian', 'Romance languages', 'créoles et pidgins basés sur le français', 'Yupik languages', 'Uighur', 'Tsonga', 'lushai', 'anglais', 'mandingue', 'zandé, langues', 'Pahlavi', 'Kirmanjki', 'Akkadian', 'Shan', 'Nilo-Saharan languages', 'Thai', 'Vai', 'Inari Sami', 'phénicien', 'chipewyan', 'salishennes, langues', 'Greek, Ancient (to 1453)', 'Ancient Greek', 'ancient greek', 'Kimbundu', 'Dargwa', 'Adangme', 'Tlingit', 'serbo-croate', 'Aleut', 'Nynorsk, Norwegian', 'choctaw', 'Kirdki', 'tigrigna', 'karen, langues', 'sino-tibétaines, langues', 'gaélique écossais', 'Maldivian', 'géorgien', 'slovaque', 'grebo', 'italien', 'avestique', 'gayo', 'tai, langues', 'khasi', 'Tuvinian', 'galla', 'Romansh', 'bikol', 'couchitiques, langues', 'Slavic languages', 'Pohnpeian', 'sidamo', 'langues non codées', 'German, Old High (ca.750-1050)', 'Mari', 'non applicable', 'Telugu', 'Yakut', 'bamiléké, langues', 'Spanish', 'Sanskrit', 'Urdu', 'tswana', 'Central Khmer', 'arménien', 'amharique', 'Chinook jargon', 'Adyghe', 'Avaric', 'Achinese', 'tatar de Crimé', 'Niuean', 'Xhosa', 'javanais', 'zazaki', 'Dimli', 'vote', 'castillan', 'Simplified Chinese', 'bable', 'arapaho', 'kannada', 'Belarusian', 'Chuukese', 'Tereno', 'Ladino', 'Khotanese', 'Hawaiian', 'Southern Altai', 'Khasi', 'éwondo', 'Official Aramaic (700-300 BCE)', 'altaïques, langues', 'moksa', 'vieux slave', 'Tai languages', 'tahitien', 'Kikuyu', 'lojban', 'Chinese (traditional)', 'indéterminée', 'Arumanian', 'Wolaytta', 'temne', 'Wolof', 'Iranian languages', 'Ainu', 'islandais', 'thaï', 'Ga', 'Old Church Slavonic', 'Sasak', 'macédo-roumain', 'inuktitut', 'magahi', 'Geez', 'Sandawe', 'Karelian', 'nias', 'Kabyle', 'osage', 'French, Middle (ca.1400-1600)', 'Arabic', 'sémitiques, langues', "réservée à l'usage local", 'Fang', 'Zhuang', 'Limburgish', "mi'kmaq", 'Washo', 'bouriate', 'marvari', 'Walloon', 'Not applicable', 'Herero', 'afar', 'muskogee', 'syriaque classique', "Gwich'in", 'xhosa', 'multilingue', 'Caucasian languages', 'Micmac', 'afrihili', 'ijo, langues', 'singhalais', 'samaritain', 'efik', 'créoles et pidgins basés sur le portugais', 'finnois', 'tlhIngan-Hol', 'Hiri Motu', 'slaves, langues', 'Kalaallisut', 'Swahili', 'Limburgan', 'haïtien', 'Tokelau', 'wolaitta', 'pahlavi', 'lamba', 'Welsh', 'palau', 'Dravidian languages', 'allemand, vieux haut (ca. 750-1050)', 'Low Saxon', 'nahuatl, langues', 'celtes, langues', 'luo (Kenya et Tanzanie)', 'ekajuk', 'Basque', 'avar', 'Western Pahari languages', 'sepedi', 'letton', 'chuang', 'chichewa', 'tadjik', 'kosrae', 'néerlandais moyen (ca. 1050-1350)', 'Kawi', 'fanti', 'ndonga', 'aragonais', 'nordamérindiennes, langues', 'Haitian', 'kikuyu', 'Kara-Kalpak', 'Gothic', 'kashmiri', 'nynorsk, norvégien', 'Malayalam', 'wallon', 'Soninke', 'Macedo-Romanian', 'Interlingua (International Auxiliary Language Association)', 'sranan tongo', 'papoues, langues', 'Divehi', 'norwegian_bokmal', 'Newari', 'Occidental', 'hmong', 'Moldavian', 'vieux bulgare', 'Sign Languages', 'symboles Bliss', 'Kuanyama', 'sami de Lule', 'judéo-persan', 'Caddo', 'Finnish', 'Judeo-Persian', 'Zande languages', 'kongo', 'Catalan', 'Chechen', 'Nuosu', 'Skolt Sami', 'Arawak', 'Marshallese', 'Chibcha', 'allemand', 'Tagalog', 'moré', 'Lower Sorbian', 'Neapolitan', 'Serbian', 'dakota', 'papiamento', 'ido', 'kurde', 'Rarotongan', 'Bable', 'Nauru', 'Lithuanian', 'Bini', 'Greenlandic', 'Mapudungun', 'sumérien', 'South American Indian languages', 'bemba', 'Inupiaq', 'German', 'sames, langues', 'Karen languages', 'rwanda', 'Nyoro', 'azéri', 'Tonga (Nyasa)', 'malayalam', 'coréen', 'oriya', 'Kumyk', 'Philippine languages)', 'anglais moyen (1100-1500)', 'tagalog', 'Altaic languages', 'pohnpei', 'Traditional Chinese', 'Tumbuka', 'fidjien', 'tiv', 'Dzongkha', 'Songhai languages', 'Luo (Kenya and Tanzania)', 'Prakrit languages', 'Lao', 'prâkrit, langues', 'iakoute', 'judéo-arabe', 'Nogai', 'Siksika', 'frison occidental', 'Dogri', 'maori des îles Cook', 'tokelau', 'German, Middle High (ca.1050-1500)', 'tupi, langues', 'birman', 'akkadien', 'Manx', 'Danish', 'breton', 'fang', 'Alsatian', 'Kachin', 'Udmurt', 'herero', 'Sundanese', 'Khoisan languages', 'maya, langues', 'Madurese', 'Sotho, Southern', 'Slovenian', 'goudjrati', 'soussou', 'Eastern Frisian', 'Votic', 'krou, langues', 'Rapanui', 'Castilian', 'Turkmen', 'nilo-sahariennes, langues', 'luba-katanga', 'Akan', 'nogaï', 'estonien', 'Fijian', 'zuni', 'luba-lulua', 'Crimean Turkish', 'Wakashan languages', 'nyankolé', 'Artificial languages', 'Uzbek', 'Greek', 'Manobo languages', 'khotanais', 'aroumain', 'Turkish, Ottoman (1500-1928)', 'Hittite', 'newari', 'carib', 'Georgian', 'Aromanian', 'Luiseno', 'carélien', 'Oromo', 'tatar', 'French, Old (842-ca.1400)', 'peul', 'Niger-Kordofanian languages', 'léonais', 'Chamic languages', 'frioulan', 'mapudungun', 'russe', 'Tahitian', 'bichlamar', 'Dyula', 'Munda languages', 'indonésien', 'wakashanes, langues', 'Uncoded languages', 'kachin', 'samoan', 'norvégien bokmål', 'sandawe', 'South Ndebele', 'Ijo languages', 'Australian languages', 'Blin', 'abkhaze', 'flamand', 'judéo-espagnol', 'madourais', 'esclave (athapascan)', 'Portuguese', 'jingpho', 'Luba-Katanga', 'Luxembourgish', 'Somali', 'kanouri', 'washo', 'baltes, langues', 'Breton', 'Old Newari', 'Gujarati', 'langues himachalis', 'galibi', 'igbo', 'guèze', 'Bashkir', 'Volapük', 'mounda, langues', 'Zazaki', 'sotho du Sud', 'venda', 'Oriya', 'Scottish Gaelic', 'tlingit', 'Delaware', 'germaniques, langues', 'Hiligaynon', 'Moksha', 'Baluchi', 'No linguistic content', 'Mirandese', 'Bikol', 'Tonga (Tonga Islands)', 'Maithili', 'tamoul', 'copte', 'pas de contenu linguistique', 'Haida', 'français ancien (842-ca.1400)', 'Bhojpuri', 'Bantu languages', 'mannois', 'arabe', 'Northern Sotho', 'Venda', 'Erzya', 'dargwa', 'Jingpho', 'makassar', 'romanes, langues', 'Sango', 'tok pisin', 'irlandais', 'Sinhalese', 'Tatar', 'français', 'Albanian', "occitan ancien (jusqu'à 1500)", 'ouïgour', 'Sami languages', 'Umbundu', 'Afar', 'Chamorro', 'batak, langues', 'sogdien', 'Tiv', 'Iban', 'yupik, langues', 'kimbundu', 'vietnamien', 'kuanyama', 'Norwegian Nynorsk', 'norwegian nynorsk', 'zaza', 'Sindhi', 'Pedi', 'Estonian', 'Ojibwa', 'maithili', 'philippines, langues', 'Komi', 'Undetermined', 'chibcha', 'Mongolian', 'Ewe', 'Land Dayak languages', 'sami du Sud', 'Magahi', 'Ossetic', 'ouszbek', 'bas-sorabe', 'Serbo-Croatian', 'Kpelle', 'Afrikaans', 'nyanja', 'Tsimshian', 'Filipino', "provençal ancien (jusqu'à 1500)", 'mari', 'chewa', 'sérère', 'Nepali', 'télougou', 'chuuk', 'Tok Pisin', 'tchétchène', 'Hmong', 'Sakan', 'Ingush', 'ganda', 'yi de Sichuan', 'khmer central', 'japonais', 'Kannada', 'Sidamo', 'lahnda', 'Yapese', 'Apache languages', 'Hupa', 'Rundi', 'Brasilian Portuguese', 'baloutchi', 'niué', 'Masai', 'saxon, bas', 'mohawk', 'Mohawk', 'Gikuyu', 'Persian', 'Old Bulgarian', 'Kru languages', 'Judeo-Arabic', 'caddo', 'Fulah', 'ilocano', 'pendjabi', 'Dene Suline', 'Dogrib', 'Zulu', 'Ndebele, South', 'klingon', 'Papiamento', 'Russian', 'celtiques, langues', 'Samoan', 'Awadhi', 'Mong', "Mi'kmaq", 'turc', 'Hindi', 'Esperanto', 'persan', 'brasilian portuguese', 'irlandais moyen (900-1200)', 'Mon-Khmer languages', 'Dakota', 'Javanese', 'konkani', 'soundanais', 'tsimshian', 'tchèque', 'Pangasinan', 'bedja', 'Dutch, Middle (ca.1050-1350)', 'ougaritique', 'khoïsan, langues', 'twi', 'dayak, langues', 'Western Frisian', 'unknown', 'Aymara', 'écossais', 'Gbaya', 'Blissymbolics', 'Lozi', 'hindi', 'albanais', 'Chagatai', 'yiddish', 'Nias', 'Bambara', 'dravidiennes,langues', 'allemand, bas', 'djaghataï', 'Northern Frisian', 'Yao', 'portugais', 'Reserved for local use', 'lingala', 'kirdki', 'altai du Sud', 'Dhivehi', 'fon', 'Berber languages)', 'Croatian', 'Tajik', 'luiseno', 'sasak', 'hongrois', 'Manchu', 'bugi', 'Faroese', 'pampangan', 'Kurukh', 'ndébélé du Sud', 'angika', 'syriaque', 'Buriat', 'Southern Sami', 'Dinka', 'Moldovan', 'Hebrew', 'ndébélé du Nord', 'Semitic languages', 'pangasinan', 'sukuma', 'tumbuka', 'aïnou', 'ukrainien', 'indo-aryennes, langues', 'Avestan', 'français moyen (1400-1600)', 'Klingon', 'Gorontalo', 'nogay', 'Classical Syriac', 'Lushai', 'Cushitic languages', 'Minangkabau', 'awadhi', 'Flemish', 'Inuktitut', 'Algonquian languages', 'kurukh', 'Tamil', 'Tswana', 'bosniaque', 'balinais', 'Cheyenne', 'Mende', 'sakan', 'ourdou', 'hiligaynon', 'Kurdish', 'perse, vieux (ca. 600-400 av. J.-C.)', 'Tupi languages', 'Pilipino', 'valencien', 'Banda languages', 'erza', 'micmac', 'chinois', 'afro-asiatiques, langues', 'Lunda', 'Kyrgyz', 'Malay', 'Gayo', 'môn-khmer, langues', 'mirandais', 'algonquines, langues', 'Ugaritic', 'Romanian', 'Irish', 'Nahuatl languages', 'Nubian languages', 'Manipuri', 'Burmese', 'bilen', 'bengali', 'Kinyarwanda', 'Central American Indian languages', 'bhojpuri', 'Kutenai', 'Cree', 'kom', 'Kirghiz', 'Gaelic', 'iban', 'Mapuche', 'kpellé', 'Batak languages', 'austronésiennes, langues', 'haut-sorabe', 'zoulou', 'Letzeburgesch', 'gond', 'Creoles and pidgins, French-based', 'Amharic', 'delaware', 'Ganda', 'bas saxon', 'Sranan Tongo', 'tsonga', 'tchouvache', 'bulgare', 'Swiss German', 'Leonese', 'Japanese', 'Corsican', 'gorontalo', 'Persian, Old (ca.600-400 B.C.)', 'Serer', 'malais', 'karib', 'chames, langues', 'Saxon, Low', 'danois', 'hittite', 'sud-amérindiennes, langues', 'guarani', 'Chuvash', 'wolaytta', 'swahili', 'Timne', 'rundi', 'Galician', 'Irish, Old (to 900)', 'lozi', 'Indo-European languages', 'espagnol', 'volapük', "créoles et pidgins basés sur l'anglais", 'Punjabi', 'nepal bhasa', 'Germanic languages', 'tsigane', 'sanskrit', 'Syriac', 'Wolaitta', 'ingouche', 'Celtic languages', 'Afrihili', 'Lamba', 'kamba', 'asturien', 'Phoenician', 'cree', 'chinook, jargon', 'Polish', 'nauruan', 'dioula', 'Zapotec', 'songhai, langues', 'Waray', 'cebuano', 'Bulgarian', 'dimili', 'Imperial Aramaic (700-300 BCE)', 'créoles et pidgins', 'langues des signes', 'Angika', 'pali', 'waray', 'Friulian', 'alémanique', 'Cornish', 'Norse, Old', 'Buginese', 'Valencian', "araméen d'empire (700-300 BCE)", 'zapotèque', 'Northern Sami', 'Ukrainian', 'douala', 'Mongo', 'Uyghur', 'slovène', 'mandchou', 'Slovak', 'lao', 'Fanti', 'Sumerian', 'tongan (Îles Tonga)', 'Occitan, Old (to 1500)', 'Gilbertese', 'Fon', 'malgache', 'Navajo', 'maltais', 'adyghé', 'moldave', 'braj', 'North American Indian languages', 'artificielles, langues', 'dzongkha', 'akan', 'suisse alémanique', 'afrikaans', 'Arapaho', 'Chinese', 'Beja', 'Pampanga', 'Samaritan Aramaic', 'Creoles and pidgins, Portuguese-based', 'nubiennes, langues', 'Twi', 'Bilin', 'Bengali', 'marshall', 'apaches, langues', 'macédonien', 'iraniennes, langues', 'aléoute', 'nyamwezi', 'Zuni', 'slavon liturgique', 'kiribati', 'swati', 'Adygei', 'Latvian', 'athapascanes, langues', 'manobo, langues', 'tetum', 'mapuce', 'ojibwa', 'éwé', 'Osage', 'latin', 'Sogdian', 'Egyptian (Ancient)', 'Duala', 'catalan', 'Cebuano', "irlandais ancien (jusqu'à 900)", 'Bedawiyet', 'minangkabau', 'Pushto', 'croate', 'rajasthani', 'gallois', 'Chewa', 'Shona', 'maldivien', 'Abkhazian', 'wolof', 'karakalpak', 'polonais', 'Santali', 'ossète', 'Church Slavonic', 'Slave (Athapascan)', 'bini', 'tonga (Nyasa)', 'Kalmyk', 'Basa', 'limbourgeois', 'Assamese', 'Italian', 'tuvalu', 'sindhi', 'Irish, Middle (900-1200)', 'Sukuma', 'filipino', 'égyptien', 'langues paharis occidentales', 'sorabes, langues', 'English', 'Mayan languages', 'Malagasy', 'Yoruba', 'Slovene', 'oudmourte', 'adangme', 'Turkish', 'Panjabi', 'berbères, langues', 'Finno-Ugrian languages)', 'haoussa', 'bambara', 'kawi', 'German, Low', 'Rajasthani', 'hawaïen', 'acoli', 'assamais', 'somali', 'Zenaga', 'Mossi', 'Kabardian', 'hupa', 'Greek, Modern (1453-)', 'Kashmiri', 'norvégien nynorsk', 'rarotonga', 'Blissymbols', 'Bokmål, Norwegian', 'Nyamwezi', 'Susu', 'Elamite', 'lituanien', 'Kashubian', 'espéranto', 'Sino-Tibetan languages', 'basa', "n'ko", 'Aragonese', 'groenlandais', 'rapanui', 'Navaho', 'pachto', 'biélorusse', 'Bosnian', 'tamacheq', 'Swati', 'sami skolt', 'norvégien', 'yoruba', 'Low German', 'Papuan languages', 'Bamileke languages', "gwich'in", 'Old Slavonic', "sami d'Inari", 'Limburger', 'Creoles and pidgins, English based', 'kabyle', 'North Ndebele', 'otomi, langues', 'pilipino', 'manx', 'hiri motu', 'Nyankole', 'Maltese', 'Makasar', 'dogrib', 'karatchai balkar', 'féroïen', 'Macedonian', 'Lezghian', 'Ndonga', 'bantou, langues', 'Konkani', 'Balinese', 'santal', 'Chuang', 'aceh', 'Tetum', 'oïrat', 'Lojban', 'zhuang', 'mendé', 'Multiple languages', 'Romany', 'Bihari languages', 'dinka', 'Himachali languages', 'Athapascan languages', 'Haitian Creole', 'indo-européennes, langues', 'Korean', 'Braj', 'corse', 'nzema', 'Kazakh', 'romanche', 'Marathi', 'arawak', 'nyoro', 'Dutch', 'blin', 'Tibetan', 'caucasiennes, langues', 'Otomian languages', 'Hausa', 'Karachay-Balkar', 'langues biharis', 'Choctaw', 'Lahnda', 'chan', 'vaï'
-```
 
 ## 5、接口调用实例
 
