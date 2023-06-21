@@ -22,3 +22,8 @@ def get_signature(timestamp, dev_id, dev_key):
     signature = hmac.new(str(dev_key).encode(), id_ts.encode(),
                          digestmod=hashlib.sha256).hexdigest()
     return signature
+def generate_signature(application_key: str, application_secret: str) -> str:
+    timestamp: str = str(int(time.time()))
+    message = f"{application_key}{timestamp}"
+    signature = hmac.new(application_secret.encode("utf-8"), message.encode("utf-8"), hashlib.sha256).hexdigest()
+    return signature, timestamp

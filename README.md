@@ -30,8 +30,8 @@
 
 | 内容     | 说明                                                         |
 | :------- | ------------------------------------------------------------ |
-| 请求协议 | ws[s] (为提高安全性，强烈推荐wss)                            |
-| 请求地址 | ws[s]: //translate.abcpen.com/v1/asr/ws?{请求参数} *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用* |
+| 请求协议 | wss                                                          |
+| 请求地址 | wss: //asr-v1-dev.abcpen.com/v1/asr/ws?{请求参数} *注：服务器IP不固定，为保证您的接口稳定，请勿通过指定IP的方式调用接口，使用域名方式调用*(开发环境域名：wss://asr-v1-dev.abcpen.com/v1/asr/ws?{请求参数}) |
 | 接口鉴权 | 签名机制，详见 [signa生成](#signa生成)                       |
 | 响应格式 | 统一采用JSON格式                                             |
 | 开发语言 | 任意，只要可以向笔声云服务发起WebSocket请求的均可            |
@@ -49,33 +49,50 @@
 
 接口地址
 
-```text
-    ws://translate.abcpen.com/v1/asr/ws?{请求参数}
-    或
-    wss://translate.abcpen.com/v1/asr/ws?{请求参数}
+```bash
+wss://translate.abcpen.com/v1/asr/ws?{请求参数}
 ```
 
 参数格式
 
 ```text
-    key1=value1&key2=value2…（key和value都需要进行urlencode）
+key1=value1&key2=value2…（key和value都需要进行urlencode）
 ```
 
 参数说明
 
-| 参数              | 类型   | 必须 | 说明                                                         | 示例                                                        |
-| :---------------- | :----- | :--- | :----------------------------------------------------------- | :---------------------------------------------------------- |
-| appid             | string | 是   | 笔声开放平台应用ID                                           | 595f23df                                                    |
-| ts                | string | 是   | 当前时间戳，从1970年1月1日0点0分0秒开始到现在的秒数          | 1512041814                                                  |
-| signa             | string | 是   | 加密数字签名（基于HMACSHA1算法）                             | IrrzsJeOFk1NGfJHW6SkHUoN9CU=                                |
-| lang              | string | 否   | 实时语音转写语种，不传自动感知                               | 语种类型：中文、中英混合识别：cn；英文：en                  |
-| punc              | string | 否   | 标点过滤控制，默认返回标点，punc=0会过滤结果中的标点         | 1                                                           |
-| speaker_number    | string | 否   | 发音人个数，可选值：0-10，0表示盲分                          | 默认：2（适用通话时两个人对话的场景）                       |
-| trans_mode        | int    | 否   | 是否打开同声传译 ，<br/>1表示打开，0表示关闭                 | 1                                                           |
-| target_lang       | string | 否   | 目标翻译语种：控制把源语言转换成什么类型的语言；<br/>中文：cn<br/>英文：en<br/>日语：ja<br/>韩语：ko<br/>俄语：ru<br/>法语：fr<br/>西班牙语：es<br/>越南语：vi<br/> | trans_mode为1条件下，target_lang有效。 默认为英文“en"。     |
-| pd                | string | 否   | 垂直领域个性化参数: <br/>法院: court <br/>教育: edu <br/>金融: finance <br/>医疗: medical <br/>科技: tech <br/>运营商: isp <br/>政府: gov <br/>电商: ecom <br/>军事: mil <br/>企业: com <br/>生活: life <br/>汽车: car | 设置示例：pd="edu" 参数pd为非必须设置，不设置参数默认为通用 |
-| audio_sample_rate | string | 否   | 音频采样率，有"8000", "16000"，分别代表采样率是8K和16K，默认是“16000” | “16000”                                                     |
-| asr_type          | string | 否   | 识别结果输出类型，0，输出逐字和逐句结果；1，逐句输出；2，逐字输出。如输入错误或不输出，默认为0 | “0”                                                         |
+| 参数              | 类型   | 必须 | 说明                                                         | 示例                                                         |
+| :---------------- | :----- | :--- | :----------------------------------------------------------- | :----------------------------------------------------------- |
+| appid             | string | 是   | 笔声开放平台应用ID                                           | 595f23df                                                     |
+| ts                | string | 是   | 当前时间戳，从1970年1月1日0点0分0秒开始到现在的秒数          | 1512041814                                                   |
+| signa             | string | 是   | 加密数字签名（基于HMACSHA1算法）                             | IrrzsJeOFk1NGfJHW6SkHUoN9CU=                                 |
+| source_lang       | string | 否   | 实时语音转写语种，也就是源语言；不传自动感知                 | 语种类型：中文、中英混合识别：cn；<br/>英文："en" <br/>德文："de" <br/>法语："fr" <br/> 西班牙语："es" <br/>意大利："it" <br/>俄罗斯："ru" <br/> 日语 "ja" <br/>韩国 "ko" <br/>更多语言参考本文附录 |
+| punc              | string | 否   | 标点过滤控制，默认返回标点，punc=0会过滤结果中的标点         | 1                                                            |
+| speaker_number    | string | 否   | 发音人个数，可选值：0-10，0表示盲分                          | 默认：2（适用通话时两个人对话的场景）                        |
+| scene             | string | 否   | 垂直领域个性化参数: <br/>法院: court <br/>教育: edu <br/>金融: finance <br/>医疗: medical <br/>科技: tech <br/>运营商: isp <br/>政府: gov <br/>电商: ecom <br/>军事: mil <br/>企业: com <br/>生活: life <br/>汽车: car | 设置示例：scene="edu" 参数scene为非必须设置，不设置参数默认为通用 |
+| audio_sample_rate | string | 否   | 音频采样率，有"8000", "16000"，分别代表采样率是8K和16K，默认是“16000” | “16000”                                                      |
+| asr_type          | string | 否   | 识别结果输出类型，0，输出逐字和逐句结果；1，逐句输出；2，逐字输出。如输入错误或不输出，默认为0 | “0”                                                          |
+
+（2）、实时变更同声传译参数
+
+ ```json
+                         //传输该控制命令的时候，将下面的json数据编码成字符串传输（不是二进制数据）
+                         {
+                             "translate": {
+                                 "src_lang": "zh",
+                                 "tgt_lang": "en",
+                                 "enabled": 1
+                             },
+                         }
+ ```
+
+实时变更参数说明：
+
+* 语言参数
+  * src_lang:  源语言，如“zh', "de"等，可以输入空格字符串
+  * tgt_lang: 目标语言，如”de", "ja" 等
+  * 常见翻译语种：控制把源语言转换成什么类型的语言；<br/>中文：cn<br/>英文：en<br/>日语：ja<br/>韩语：ko<br/>俄语：ru<br/>法语：fr<br/>西班牙语：es<br/>越南语：vi<br/>
+* enabled： 是否打开同声传译，1表示打开，0表示关闭同声传译
 
 #### （2）、signa生成
 

@@ -19,7 +19,7 @@ time_per_chunk = 0.2
 
 class Client():
     def __init__(self, args):
-        base_url = "wss://{}/v1/asr/ws".format(args.url)
+        base_url = "ws://{}/v1/asr/ws".format(args.url)
         ts = str(int(time.time()))
         self.wav_path = args.wave_path
 

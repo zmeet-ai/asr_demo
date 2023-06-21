@@ -8,7 +8,7 @@ import logging
 import time
 import argparse
 from progress.bar import Bar
-from auth.client_auth_service import get_signature_flytek
+from auth.client_auth_service import get_signature_flytek, generate_signature
 
 # 下面的app_id 和api_key仅供测试使用，生产环境请向商务申请(手机：18605811078, 邮箱：jiaozhu@abcpen.com)
 app_id = "test1"
@@ -16,9 +16,10 @@ app_secret = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
 
 async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"):
 
-    timestamp = str(int(time.time()))
+    #timestamp = str(int(time.time()))
 
-    signa = get_signature_flytek(timestamp, app_id, app_secret)
+    #signa = get_signature_flytek(timestamp, app_id, app_secret)
+    signa, timestamp = generate_signature(app_id, app_secret)
     query_post_apply = {
         "ts": timestamp,
         "appid": app_id,
@@ -27,10 +28,9 @@ async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"
         "audio_encode": audio_encode,
         "audio_sample_rate": audio_sample,
         "has_participle": "false"
-
     }
 
-    url = "https://{}/v1/asr/long".format(args.url)
+    url = "http://{}/v1/asr/long".format(args.url)
     print("\nThe requst para is {}".format(query_post_apply))
     response = requests.post(url, query_post_apply)
     print(response.text)
@@ -75,7 +75,7 @@ async def main():
         parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
         parser.add_argument('-u', '--url', type=str, metavar='URL',
-                            help='server url', default='ai.abcpen.com')
+                            help='server url', default='127.0.0.1:3698')
         args = parser.parse_args()
 
 
