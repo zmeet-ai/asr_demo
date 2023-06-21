@@ -83,6 +83,10 @@ key1=value1&key2=value2…（key和value都需要进行urlencode）
                                  "tgt_lang": "en",
                                  "enabled": 1
                              },
+                             "punc":{
+                                 "enabled": 1
+                             },
+                             "scene": "court"
                          }
  ```
 
