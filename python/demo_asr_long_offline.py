@@ -14,6 +14,7 @@ from auth.client_auth_service import get_signature_flytek, generate_signature
 app_id = "test1"
 app_secret = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
 
+
 async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"):
 
     timestamp = str(int(time.time()))
@@ -30,7 +31,7 @@ async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"
         "has_participle": "false"
     }
 
-    url = "http://{}/v1/asr/long".format(args.url)
+    url = "https://{}/v1/asr/long".format(args.url)
     print("\nThe requst para is {}".format(query_post_apply))
     response = requests.post(url, query_post_apply)
     print(response.text)
@@ -73,17 +74,17 @@ async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"
 async def main():
     try:
         parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+                                         formatter_class=argparse.RawDescriptionHelpFormatter)
         parser.add_argument('-u', '--url', type=str, metavar='URL',
-                            help='server url', default='ai.abcpen.com')
+                            help='server url', default='asr-prod.abcpen.com')
         args = parser.parse_args()
-
 
         if (len(app_id) <= 0 or len(app_secret) <= 0):
             print("Please apply appid and appsecret, demo will exit now")
             sys.exit(1)
         results = await asyncio.gather(asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3", args, audio_sample="48000"),
-                                       asr_offline("https://zos.abcpen.com/tts/zmeet/20221023/b6a2c7ac-52c8-11ed-961e-00155dc6cbed.mp3", args, audio_sample="48000")
+                                       asr_offline(
+                                           "https://zos.abcpen.com/tts/zmeet/20221023/b6a2c7ac-52c8-11ed-961e-00155dc6cbed.mp3", args, audio_sample="48000")
                                        )
 
         print("\n\nWill output the final result in order!")
