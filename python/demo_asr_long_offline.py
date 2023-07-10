@@ -16,10 +16,10 @@ app_secret = "2258ACC4-199B-4DCB-B6F3-C2485C63E85A"
 
 async def asr_offline(url_wave, args, audio_encode="mpeg2", audio_sample="16000"):
 
-    #timestamp = str(int(time.time()))
+    timestamp = str(int(time.time()))
 
     #signa = get_signature_flytek(timestamp, app_id, app_secret)
-    signa, timestamp = generate_signature(app_id, app_secret)
+    signa = get_signature_flytek(timestamp, app_id, app_secret)
     query_post_apply = {
         "ts": timestamp,
         "appid": app_id,
@@ -75,7 +75,7 @@ async def main():
         parser = argparse.ArgumentParser(description="ASR Server offline audio file demo",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
         parser.add_argument('-u', '--url', type=str, metavar='URL',
-                            help='server url', default='127.0.0.1:3698')
+                            help='server url', default='ai.abcpen.com')
         args = parser.parse_args()
 
 
