@@ -1,22 +1,26 @@
-# 离线语音识别
+# 语音降噪接口
 
-# 一、离线语音识别优势
+# 一、语音降噪优势
 
-* 支持超过100个国家语言的实时同声传译，同步输出和客户母语对应的实时同传翻译文本和语音合成数据
-* **业界领先的声纹识别，返回结果字段中精准识别说话人ID**
-* **庞大的声纹数据库，海量音视频文件中毫秒级返回说话人的片段音视频信息**
-* **业界领先的降噪算法，返回的音视频文件，可包含降噪后的清晰语音**
-* **业界领先的高精准中英文等语音识别算法**
+语音降噪技术提供了一种先进的噪声抑制解决方案。笔声语音降噪技术利用了深度学习和人工智能算法，可以实时地降低背景噪声，使语音通信更清晰。
 
-# 二、离线语音识别API文档
+笔声语音降噪的技术有以下几个关键特点：
+
+1. 双向降噪：不仅可以降低说话者周围的噪声，还可以降低听话者端的噪声。这意味着无论是从麦克风采集到的语音信号，还是从扬声器播放的语音信号，都可以得到有效的降噪处理。
+2. 实时性：具有低延迟和实时处理的能力。这使得它非常适用于需要即时交流的场景，例如语音通话、视频会议和实时语音聊天等。
+3. 适用广泛：可以应用于各种设备和应用程序，包括电脑、智能手机、VoIP软件、游戏通话等。用户可以通过安装适配笔声语音降噪技术的应用程序或将其集成到现有的通信应用程序中来获得语音降噪的功能。
+
+# 二、语音降噪API文档
 
 ## 1、接口说明
 
-离线语音识别为超过1分钟的音频而设计。内置标点，说话人分离，语气词过滤等功能，并能通过规则替换的功能实现禁忌词替换。
+本接口支持使用restful接口，处理语音文件；有关实时接口，请联系我司商务。
 
 ### 1.1 支持的音频格式有 WAV/MP3/WMA/FLAC/AMR/OPUS/M4A/AAC
 
 ### 1.2 支持音频详情：
+
+**当前只支持16KHz 单声道音频文件的降噪，多种格式的支持下一版本补充**
 
 * 音频时长：不超过5小时
 
@@ -28,7 +32,7 @@
 
 * 采样精度：16 bits、8 bits
 
-* 编码格式：文件格式和音频解码需结合查看，如下表第一行：只支持pcm封装或wav封装的pcm音频，不支持其他文件格式封装的pcm音频。 不同的音频解码格式需在请求体中填写不同的aue.
+* 编码格式：文件格式和音频解码需结合查看，如下表第一行：只支持pcm封装或wav封装的pcm音频，不支持其他文件格式封装的pcm音频。 不同的音频解码格式需在请求体中填写不同的audio_encode.
 
 | 文件格式  | 音频解码 | audio_encode |
 | :-------- | :------- | :----------- |
@@ -42,15 +46,15 @@
 a. opus编码的音频不支持44100 Hz的采样率
 b. 仅 wav封装的pcm格式音频支持 8 bits采样精度
 
-## 2 长语音转写-创建转写任务
+## 2 语音降噪接口API
 
-* 接口描述： 使用音频文件地址创建音频转写任务。
+* 接口描述： 上传音频文件的url，返回降噪后的音频文件url
 
-* 请求格式： application/json
+* 请求格式：multipart/form-data格式
 
 * 请求方式：POST
 
-* URL: https://asr-prod.abcpen.com/v1/asr/long
+* URL: https://denoise-prod.abcpen.com/v1/denoise/create
 
 ###   2. 1  请求参数
 
@@ -61,35 +65,30 @@ Header中输入正确的账号、时间戳及签名（X-App-Key、X-Timestamp、
 
 Body
 
-| 参数名            | 类型     | 是否必须 | 描述                                                         |
-| :---------------- | :------- | :------- | :----------------------------------------------------------- |
-| audio_url         | string   | 是       | 文件的URL，如：<br/>https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3 |
-| sd                | string   | 否       | 说话人区分；如使用说话人区分，设置为True，否则设置为False    |
-| callback          | string   | 否       | 支持http / https。填写后可通过回调获取结果。为空可使用查询获取结果。 |
-| audio_encode      | string   | 否       | 设置关于文件的编码和码率等。                                 |
-| speaker_number    | integer  | 否       | 说话人分离功能默认为2，两位位说话人； 0 表示盲分。2-4时，表示指定了说话人的数量，返回speakerId。 |
-| words_output      | string   | 否       | 逐字输出开关。 默认false，逐句输出。 true，开启后带有逐字模式。 |
-| audio_sample_rate | interger | 否       | 采样频率, 支持选项有： ["8000", "16000", "44100", "48000"]， 从中任选一个符合客户输入的语音采样频率值 |
+| 参数名    | 类型   | 是否必须 | 描述                                                         |
+| :-------- | :----- | :------- | :----------------------------------------------------------- |
+| audio_url | string | 是       | 文件的URL，如：<br/>https://zos.abcpen.com/tts/zmeet/20221023/3058bca8-52cb-11ed-961e-00155dc6cbed.mp3 |
+| callback  | string | 否       | 支持http/https。填写后可通过回调获取结果。为空可使用查询获取结果。 |
 
 #### 2.1.3 返回数据实例
 
 *  创建任务返回结果：返回包含任务task_id的JSON字符串
 
 ````json
-{"code":"0","data":{"task_id":"8ba73ba7-08e3-4590-a379-5f77f7b6508d"},"msg":"success"}
+{"code":"0","data":{"task_id":"3950fc47-dc2c-4d17-9ef4-d54e8ad55f9e"},"msg":"success"}
 ````
 
 
 
 ## 3、查询任务
 
-* 接口描述： 使用音频文件地址创建音频转写任务。
+* 接口描述： 传入task_id, 查询降噪的结果
 
 * 请求格式： application/json
 
 * 请求方式：POST
 
-* URL: https://asr-prod.abcpen.com/v1/asr/long
+* URL: https://denoise-prod.abcpen.com/v1/denoise/query
 
 ###   3. 1  请求参数
 
@@ -101,16 +100,16 @@ Header中输入正确的账号、时间戳及签名（X-App-Key、X-Timestamp、
 
 Body
 
-| 参数名  | 类型   | 是否必须 | 描述                                                         |
-| :------ | :----- | :------- | :----------------------------------------------------------- |
-| task_id | string | 是       | 离线语音识别的任务id号，如 “8ba73ba7-08e3-4590-a379-5f77f7b6508d” |
+| 参数名  | 类型   | 是否必须 | 描述                                                      |
+| :------ | :----- | :------- | :-------------------------------------------------------- |
+| task_id | string | 是       | 降噪的任务id号，如 “8ba73ba7-08e3-4590-a379-5f77f7b6508d” |
 
 #### 3.1.3 返回结果实例
 
 * 返回的是JSON字符串：
 
 ```json
-{'code': '0', 'data': {'data': {'speechResult': {'onebest': '除常规的宠物食品，宠物用具外，宠物殡葬，宠物医疗，宠物保险，宠物服务，线下门店等在外界看来颇为小众的领域，也陆续拿到动辄上千万甚至过亿的投资。近两年，我国一人户家庭数超1.25亿，占比超25%。 2021年，我国饲养猫狗的人群超6800万，其中有近一半 是90后宠物主。当传统家庭结构发生变化，越来越多年轻人把情感倾注到宠物身上，宠物从单纯的陪伴者晋升为亲密家人，而这些毛孩子们也像人类幼崽一样，有着吃喝拉撒睡，医疗，托管，保险等各种需求，愿意为之付费的宠物主们就 这样浇灌出一个千亿消费市场。', 'duration': 53928, 'detail': [{'sentences': '除常规的宠物食品，', 'wordBg': '320', 'wordEd': '2320', 'speakerId': '1'}, {'sentences': '宠物用具外，', 'wordBg': '2320', 'wordEd': '3720', 'speakerId': '1'}, {'sentences': '宠物殡葬，', 'wordBg': '3720', 'wordEd': '4840', 'speakerId': '1'}, {'sentences': '宠物医疗，', 'wordBg': '4840', 'wordEd': '6080', 'speakerId': '1'}, {'sentences': ' 宠物保险，', 'wordBg': '6080', 'wordEd': '7280', 'speakerId': '1'}, {'sentences': '宠物服务，', 'wordBg': '7280', 'wordEd': '8000', 'speakerId': '1'}, {'sentences': '线下门店等在外界看来颇为小众的领域，', 'wordBg': '8000', 'wordEd': '11750', 'speakerId': '1'}, {'sentences': '也陆续拿到动辄上千万甚至过亿的投资。', 'wordBg': '11750', 'wordEd': '14930', 'speakerId': '0'}, {'sentences': '近两年，', 'wordBg': '15420', 'wordEd': '16460', 'speakerId': '0'}, {'sentences': '我国一人户家庭数超1.25亿，', 'wordBg': '16460', 'wordEd': '20340', 'speakerId': '0'}, {'sentences': '占比超25%。', 'wordBg': '20340', 'wordEd': '22300', 'speakerId': '0'}, {'sentences': '2021年，', 'wordBg': '22300', 'wordEd': '23060', 'speakerId': '0'}, {'sentences': '我国饲养猫狗的人群超6800万，', 'wordBg': '23060', 'wordEd': '26740', 'speakerId': '0'}, {'sentences': '其中有近一半是90后宠物主。', 'wordBg': '26740', 'wordEd': '29200', 'speakerId': '0'}, {'sentences': '当传统家庭结构发生变化，', 'wordBg': '29700', 'wordEd': '32300', 'speakerId': '0'}, {'sentences': '越来越多年轻人把情感倾注到宠物身上，', 'wordBg': '32300', 'wordEd': '36100', 'speakerId': '0'}, {'sentences': '宠物从单纯的陪伴者晋升为亲密家人，', 'wordBg': '36100', 'wordEd': '39780', 'speakerId': '0'}, {'sentences': '而这些毛孩子们也像人类幼崽一样，', 'wordBg': '39780', 'wordEd': '42640', 'speakerId': '0'}, {'sentences': '有着吃喝拉撒睡，', 'wordBg': '43070', 'wordEd': '44870', 'speakerId': '0'}, {'sentences': '医疗，', 'wordBg': '44870', 'wordEd': '45790', 'speakerId': '0'}, {'sentences': '托管，', 'wordBg': '45790', 'wordEd': '46510', 'speakerId': '1'}, {'sentences': '保险等各种需求，', 'wordBg': '46510', 'wordEd': '48270', 'speakerId': '1'}, {'sentences': '愿意为之付费的宠物主们就这样浇灌出一个千亿消费市场。', 'wordBg': '48270', 'wordEd': '53010', 'speakerId': '0'}]}}, 'task_id': '8ba73ba7-08e3-4590-a379-5f77f7b6508d', 'spk_id_text': '', 'audio_denoise_url': '', 'status': {'spk_id_status': 0, 'denoise_status': 0, 'asr_spk_status': 0}}, 'msg': 'success'}
+{"code":"0","data":{"audio_url":"https://zos.abcpen.com/zos/wav/denoise1.wav","audio_denoise_url":"https://zos.abcpen.com/denoise/abcpen/20230711/bf76ddc9-2f3c-453a-aa26-8ea8ae879b62.wav","denoise_status":1},"msg":"success"}
 ```
 
 
