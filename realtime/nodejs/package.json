@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.7",
+    "ws": "^8.18.0"
+  }
+}
